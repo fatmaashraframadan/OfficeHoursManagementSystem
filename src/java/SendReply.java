@@ -7,7 +7,7 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -20,10 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author fatma
+ * @author Maria
  */
-@WebServlet(urlPatterns = {"/GetContact"})
-public class GetContact extends HttpServlet {
+@WebServlet(urlPatterns = {"/SendReply"})
+public class SendReply extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,43 +35,22 @@ public class GetContact extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            
             Class.forName("com.mysql.cj.jdbc.Driver");
-            //Class.forName("com.mysql.jdbc.Driver");
-      
-            DataBase ob = new DataBase();
-            Connection con = ob.Connect();
-            
-            String username = request.getParameter("username");
-           String type = request.getSession().getAttribute("session_type").toString();
-     
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staffmembers", "root", "root");
             Statement statement = con.createStatement();
-            
-            String sql = "SELECT* FROM staffmembers.user";
-        
-            ResultSet rs = statement.executeQuery(sql);
-            Boolean found = false;
-            while(rs.next()){
-                if(rs.getString("username").equals(username)){
-                    found=true;
-                    out.print(rs.getString("email"));
-                    if (type.equals("1")) {
-                        out.print("<br>");
-                        out.print(rs.getString("phonenumber"));
-                    }
-                }
-            }if(!found){
-                out.print("This member not found!");
-            }
-            
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(GetContact.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(GetContact.class.getName()).log(Level.SEVERE, null, ex);
+            String from = request.getSession().getAttribute("session_username").toString();
+            String to = request.getParameter("ToEmail");
+            out.print(to);
+            String content = request.getParameter("message");
+            String sql;
+            sql = "INSERT INTO staffmembers.message(fromusername,tousername,content) VALUES"
+                    + "('" + from + "','" + to + "','" + content + "');";
+            statement.executeUpdate(sql);
+            response.sendRedirect("Messages.jsp");
         }
     }
 
@@ -87,7 +66,13 @@ public class GetContact extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(SendReply.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SendReply.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -101,7 +86,13 @@ public class GetContact extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(SendReply.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SendReply.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

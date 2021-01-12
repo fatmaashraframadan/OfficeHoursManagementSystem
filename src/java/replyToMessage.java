@@ -6,12 +6,6 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author fatma
+ * @author Maria
  */
-@WebServlet(urlPatterns = {"/GetContact"})
-public class GetContact extends HttpServlet {
+@WebServlet(urlPatterns = {"/replyToMessage"})
+public class replyToMessage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,39 +33,19 @@ public class GetContact extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            //Class.forName("com.mysql.jdbc.Driver");
-      
-            DataBase ob = new DataBase();
-            Connection con = ob.Connect();
-            
-            String username = request.getParameter("username");
-           String type = request.getSession().getAttribute("session_type").toString();
-     
-            Statement statement = con.createStatement();
-            
-            String sql = "SELECT* FROM staffmembers.user";
-        
-            ResultSet rs = statement.executeQuery(sql);
-            Boolean found = false;
-            while(rs.next()){
-                if(rs.getString("username").equals(username)){
-                    found=true;
-                    out.print(rs.getString("email"));
-                    if (type.equals("1")) {
-                        out.print("<br>");
-                        out.print(rs.getString("phonenumber"));
-                    }
-                }
-            }if(!found){
-                out.print("This member not found!");
-            }
-            
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(GetContact.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(GetContact.class.getName()).log(Level.SEVERE, null, ex);
+            String toEmail = request.getParameter("from");
+            out.print("<form action=\"SendReply\">"
+                    + " To: "
+                    + "<input type=\"hidden\" value=" + toEmail
+                    + " id=\"ToEmail\" name=\"ToEmail\" style=\"border: none; background: none;\"/> "
+                    + toEmail
+                    + "<br>"
+                    + " <textarea id=\"message\" name=\"message\" placeholder=\"write you message \" \n"
+                    + "                      rows=\"10\" cols=\"30\"></textarea>"
+                    + "<br> <br>"
+                    + "<input type=\"submit\" formaction=\"SendReply\" value=\"Reply\"/> "
+                    + "</form>");
+
         }
     }
 

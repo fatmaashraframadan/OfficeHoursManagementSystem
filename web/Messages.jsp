@@ -15,6 +15,23 @@
     <head>
 
         <title>JSP Page</title>
+        <script type="text/javascript">
+            function sendajax() {
+                var from = document.getElementById("from").value;
+
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function ()
+                {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                    {
+                        document.getElementById("show_response").innerHTML = xmlhttp.responseText;
+                    }
+                }
+
+                xmlhttp.open("GET", "replyToMessage?from=" + from, true);
+                xmlhttp.send();
+            }
+        </script> 
     </head>
     <body>
         <%
@@ -57,37 +74,49 @@
             <input type="submit" value="send" class="update">
         </form>
         <br>
-            <p style="color:black;"><% out.print(confirmmessage);
+        <p style="color:black;"><% out.print(confirmmessage);
                 session.setAttribute("sendingconfirmationmess", " ");%></p>  
         <br>
         <% int counter = 1;
             while (rs.next()) {
                 if (counter == 1) {
         %>
-        <form>
-            <table cellspacing="5" border="0"></table>
-            <table border="1">
-                <tr>
+        <div id="show_response">
 
-                    <th> From</th>  
-                    <th>Content</th> 
 
-                </tr>
+            <form>
+                <!-- <table cellspacing="5" border="0"></table> -->
+                <table cellspacing="5" border="1">
+                    <tr>
 
-                <%counter++;
-                    }
-                %>
-                <tr>
+                        <th> From </th>  
+                        <th>Content</th> 
+                            <% if (type.equals("1")) {%>
+                        <th>       </th>
+                            <%}
+                            %>
+                    </tr>
 
+                    <%counter++;
+                        }
+                    %>
+                    <tr>
+
+                    <input type="hidden" value=<%=rs.getString("fromusername")%> id="from" style="border: none; background: none;"/>
                     <td><%=rs.getString("fromusername")%></td>
                     <td><%=rs.getString("content")%></td>
-                </tr>
-                <%} %>
-                <%if (counter > 1) {%>
-            </table>
+                    <% if (type.equals("1")) {%>
+                    <td>
+                        <input type="button" id="replyButton" value="Reply" onclick="sendajax()" />
+                    </td>
+                    </tr>
+                    <%}
+                    }%>
+                    <%if (counter > 1) {%>
+                </table>
 
-        </form>
-
+            </form>
+        </div>
         <% }
             } catch (Exception cnfe) {
                 System.err.println("Exception: " + cnfe);
