@@ -72,7 +72,7 @@
         <% }else{
                 out.println("<script type=\"text/javascript\">");
                 out.println("window.alert('No reserved meetings to display');");
-                out.println("window.location.href=\"UserHome.jsp\";");
+                out.println("window.location.href=\"Userhome.jsp\";");
                 out.println("</script>");
 }%>
 
