@@ -47,8 +47,12 @@ public class reservation extends HttpServlet {
             String sql = "SELECT* FROM staffmembers.reservation WHERE officehoursID='" + radio + "';";
             ResultSet rs = statement.executeQuery(sql);
             if (rs.next()) {
-                session.setAttribute("reservationconfirmationmess", "Already reserved !! ");
-                response.sendRedirect("GetOfficehoursSchedule.jsp");
+                out.println("<script type=\"text/javascript\">");
+                out.println("window.alert('Already reserved !!!');");
+                out.println("window.location.href=\"GetOfficehoursSchedule.jsp\";");
+                out.println("</script>");
+                //session.setAttribute("reservationconfirmationmess", "Already reserved !! ");
+                //response.sendRedirect("GetOfficehoursSchedule.jsp");
 
             } else {
                 String tousername = request.getSession().getAttribute("session_tousername").toString();
@@ -57,9 +61,13 @@ public class reservation extends HttpServlet {
                         + "('" + fromusernamer + "','" + tousername + "','" + radio + "');";
 
                 statement.executeUpdate(sql);
-
-                session.setAttribute("reservationconfirmationmess", "Reservation Done Successfully! ");
-                response.sendRedirect("GetOfficehoursSchedule.jsp");
+                out.println("<script type=\"text/javascript\">");
+                out.println("window.alert('Reservation Done Successfully!');");
+                out.println("window.location.href=\"GetOfficehoursSchedule.jsp\";");
+                out.println("</script>");
+                
+                //session.setAttribute("reservationconfirmationmess", "Reservation Done Successfully! ");
+                //response.sendRedirect("GetOfficehoursSchedule.jsp");
 
             }
         } catch (Exception ex) {

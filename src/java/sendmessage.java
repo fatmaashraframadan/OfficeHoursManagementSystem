@@ -54,6 +54,7 @@ public class sendmessage extends HttpServlet {
                 ResultSet rs = statement.executeQuery(sql);
                 rs.next();
                 if (rs.getString("type").equals("0")) {
+                    
                     session.setAttribute("sendingconfirmationmess", "This staff not found! ");
                     response.sendRedirect("Messages.jsp");
                 }
