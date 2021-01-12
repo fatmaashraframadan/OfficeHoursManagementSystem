@@ -57,6 +57,7 @@ public class sendmessage extends HttpServlet {
                     response.sendRedirect("Messages.jsp");
                 }
             }
+            else{
             if (Selected.equals("All")) {
                 sql = "SELECT* FROM staffmembers.subjecttostaff WHERE subjectid='" + ID + "';";
                 ResultSet rs = statement.executeQuery(sql);
@@ -95,7 +96,7 @@ public class sendmessage extends HttpServlet {
                 }
             }
 
-        } catch (Exception ex) {
+        }} catch (Exception ex) {
             ex.printStackTrace();
         }
     }
