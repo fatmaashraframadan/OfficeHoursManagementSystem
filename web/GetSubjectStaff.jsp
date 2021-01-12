@@ -18,10 +18,9 @@
 <!DOCTYPE html>
 <html>
     <link type="text/css" rel="stylesheet" href="mycss.css">
-    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Office Hours</title>
+        <title>Subject Staff - Office Hours Management</title>
     </head>
 
     <body>     
@@ -37,9 +36,9 @@
                 while (rs.next()) {
                  if (counter == 1) { 
         %>
+        
         <form action="reservation">
-        <table cellspacing="5" border="0"></table>
-        <table border="1">
+        <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
             <tr>
                 <th>Subject Name</th> 
                 <th>Staff Name</th>

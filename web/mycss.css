@@ -75,7 +75,10 @@ button:hover{
     border-radius: 2px;
 }
 
-.signh{text-align: center;font-size: 50px;}
+.signh{
+    text-align: center;
+    font-size: 50px;
+}
 
 .register-switch-label{
     float: left;
@@ -141,7 +144,31 @@ button:hover{
     width:500px;
 
 }
-.update{width:150px;margin-left: 180px; margin-top: 20px;}
+.update{
+    width:150px;
+    margin-left: 180px;
+    margin-top: 20px;
+}
+
+.Large{
+    margin-right: 180px;
+    margin-top: 20px;
+    border-radius: 5px;
+    display: block;
+    width: 20%;
+    height: 42px;
+    margin-bottom: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color:black;
+    text-align: center;
+    background: transparent;
+    border: 1px solid;
+    cursor: pointer;
+    
+}
+
+    
 
 ul {
     list-style-type: none;
@@ -151,8 +178,6 @@ ul {
     position: fixed;
     height: 100%;
     overflow: auto;
-
-
 }
 
 li a {
@@ -187,10 +212,7 @@ li a:hover:not(.active) {
     border: 0px;
     height: 30px;
 }
-#Table{
-    width: 100%;
-    height: 100%;
-}
+
 
 .Messageform{
     width: 100%;
@@ -202,7 +224,15 @@ table, th, td {
     border-collapse: collapse;
     height: 40px;
 }
-
+table{
+    width: 60%;
+}
+th{
+    height: 70px;
+}
+th,td{
+    padding: 15px;
+}
 /*
 .Login , .SignUp{
     margin: 0 auto;

@@ -8,7 +8,6 @@
 <!DOCTYPE html>
 <html>
     <link type="text/css" rel="stylesheet" href="mycss.css">
-    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
     <script type="text/javascript">
         function sendajax() {
             var email = document.getElementById("Email").value;
@@ -37,7 +36,7 @@
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SignUp</title>
+        <title>SignUp - Office Hours Management</title>
 
     </head>
     <body>

@@ -40,16 +40,17 @@ public class CancelAllOnThisDay extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            HttpSession session = request.getSession(true);
-            String username = request.getSession().getAttribute("session_username").toString();
             DataBase ob = new DataBase();
             Connection con = ob.Connect();
+            HttpSession session = request.getSession(true);
+            String username = request.getSession().getAttribute("session_username").toString();
+            
 
             Statement statement = con.createStatement();
             String reservationid = request.getParameter("myradio");
             String sql = "SELECT * FROM staffmembers.reservation s INNER JOIN staffmembers.officehours b ON s.officehoursID "
-                    + "= b.officehoursID INNER JOIN staffmembers.user c ON s.tousername = c.username AND c.username='" +
-                    username + "' AND s.reservationID = '"+ reservationid +"'INNER JOIN staffmembers.slot t ON b.slotid = t.slotid;";
+                    + "= b.officehoursID INNER JOIN staffmembers.user c ON s.tousername = c.username AND c.username='"
+                    + username + "' AND s.reservationID = '" + reservationid + "'INNER JOIN staffmembers.slot t ON b.slotid = t.slotid;";
             ResultSet rs = statement.executeQuery(sql);
             rs.next();
             String date = rs.getString("date");
@@ -57,18 +58,21 @@ public class CancelAllOnThisDay extends HttpServlet {
             out.print("<br>" + username);
             statement = con.createStatement();
             sql = "SELECT * FROM staffmembers.reservation s INNER JOIN staffmembers.officehours b ON s.officehoursID "
-                    + "= b.officehoursID INNER JOIN staffmembers.user c ON s.tousername = c.username AND c.username='" +
-                    username +"' INNER JOIN staffmembers.slot t ON b.slotid = t.slotid AND t.date = '" + date + "';";
+                    + "= b.officehoursID INNER JOIN staffmembers.user c ON s.tousername = c.username AND c.username='"
+                    + username + "' INNER JOIN staffmembers.slot t ON b.slotid = t.slotid AND t.date = '" + date + "';";
             rs = statement.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 statement = con.createStatement();
                 sql = "DELETE FROM staffmembers.reservation WHERE reservationID='" + rs.getString("reservationID") + "';";
                 statement.executeUpdate(sql);
             }
-            
-            
-            session.setAttribute("cancelationconfirmationmess", "Deleted Succesfully! ");
-            response.sendRedirect("staffMeetings.jsp");
+            out.println("<script type=\"text/javascript\">");
+            out.println("window.alert('All meeting reservations on this day are cancelled successfully');");
+            out.println("window.location.href=\"staffMeetings.jsp\";");
+            out.println("</script>");
+
+            //session.setAttribute("cancelationconfirmationmess", "Deleted Succesfully! ");
+            //response.sendRedirect("staffMeetings.jsp");
         }
     }
 

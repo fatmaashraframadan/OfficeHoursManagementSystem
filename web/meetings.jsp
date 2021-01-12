@@ -11,11 +11,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-     <link type="text/css" rel="stylesheet" href="mycss.css">
-     <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    <link type="text/css" rel="stylesheet" href="mycss.css">
     <head>
-
-        <title>JSP Page</title>
+        <title>Meetings - Office Hours Management</title>
     </head>
     <body>
         <%
@@ -24,10 +22,10 @@
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staffmembers", "root", "root");
                 Statement statement = con.createStatement();
                 String username = request.getSession().getAttribute("session_username").toString();
-                String confirmmessage="";
-                  if (request.getSession().getAttribute("cancelationconfirmationmess") != null) {
+                String confirmmessage = "";
+                if (request.getSession().getAttribute("cancelationconfirmationmess") != null) {
                     confirmmessage = request.getSession().getAttribute("cancelationconfirmationmess").toString();
-                
+
                 }
                 String sql = "SELECT * FROM staffmembers.reservation s INNER JOIN staffmembers.officehours b ON s.officehoursID = b.officehoursID INNER JOIN staffmembers.user c ON s.fromusername = c.username AND c.username='" + username + "'  INNER JOIN staffmembers.slot t ON b.slotid = t.slotid;";
                 ResultSet rs = statement.executeQuery(sql);
@@ -36,7 +34,7 @@
                     if (counter == 1) {
         %>
         <form action="CancelMeeting">
-            <table cellspacing="5" border="0"></table>
+            <table cellspacing="5" border="0" style="height: 100%; width: 100%;"></table>
             <table border="1">
                 <tr>
                     <th>Meeting ID</th> 
@@ -68,12 +66,17 @@
             </table>
             <br>
             <input  class = "getcon" type="submit" value="Cancel" class="update">
-           
+
         </form>
 
-        <% }%>
-        
-            <p style="color:black;"><% out.print(confirmmessage);
+        <% }else{
+                out.println("<script type=\"text/javascript\">");
+                out.println("window.alert('No reserved meetings to display');");
+                out.println("window.location.href=\"UserHome.jsp\";");
+                out.println("</script>");
+}%>
+
+        <p style="color:black;"><% out.print(confirmmessage);
                 session.setAttribute("cancelationconfirmationmess", " ");%></p>   
             <%
                 } catch (Exception cnfe) {

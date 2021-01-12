@@ -39,13 +39,12 @@ public class LoginValidation extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
-       
+
             Class.forName("com.mysql.cj.jdbc.Driver");//Class.forName("com.mysql.jdbc.Driver");
             DataBase ob = new DataBase();
-               Connection con = ob.Connect();
- 
+            Connection con = ob.Connect();
+
             //  Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staffmembers", "root", "root");
-           
             Statement statement = con.createStatement();
             String sql = "SELECT * FROM staffmembers.user;";
             ResultSet rs = statement.executeQuery(sql);
@@ -54,7 +53,7 @@ public class LoginValidation extends HttpServlet {
             String type = request.getParameter("userType");
             String email;
             String password1;
-            
+
             boolean check = false;
             HttpSession session = request.getSession(true);
             while (rs.next()) {
@@ -66,7 +65,7 @@ public class LoginValidation extends HttpServlet {
                     session.setAttribute("session_password", password1);
                     session.setAttribute("session_type", type);
                     response.sendRedirect("Userhome.jsp");
-                    
+
                     check = true;
 
                 }

@@ -40,7 +40,8 @@ public class SendReply extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staffmembers", "root", "root");
+            DataBase ob = new DataBase();
+            Connection con = ob.Connect();
             Statement statement = con.createStatement();
             String from = request.getSession().getAttribute("session_username").toString();
             String to = request.getParameter("ToEmail");

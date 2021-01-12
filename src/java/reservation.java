@@ -40,15 +40,16 @@ public class reservation extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession(true);
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staffmembers", "root", "root");
+            DataBase ob = new DataBase();
+            Connection con = ob.Connect();
             Statement statement = con.createStatement();
             String radio = request.getParameter("myradio");
             String sql = "SELECT* FROM staffmembers.reservation WHERE officehoursID='" + radio + "';";
             ResultSet rs = statement.executeQuery(sql);
             if (rs.next()) {
-                 session.setAttribute("reservationconfirmationmess", "Already reserved !! ");
-                  response.sendRedirect("GetOfficehoursSchedule.jsp");
-              
+                session.setAttribute("reservationconfirmationmess", "Already reserved !! ");
+                response.sendRedirect("GetOfficehoursSchedule.jsp");
+
             } else {
                 String tousername = request.getSession().getAttribute("session_tousername").toString();
                 String fromusernamer = request.getSession().getAttribute("session_username").toString();
@@ -56,10 +57,10 @@ public class reservation extends HttpServlet {
                         + "('" + fromusernamer + "','" + tousername + "','" + radio + "');";
 
                 statement.executeUpdate(sql);
-                
-                 session.setAttribute("reservationconfirmationmess", "Reservation Done Successfully! ");
-                 response.sendRedirect("GetOfficehoursSchedule.jsp");
-                
+
+                session.setAttribute("reservationconfirmationmess", "Reservation Done Successfully! ");
+                response.sendRedirect("GetOfficehoursSchedule.jsp");
+
             }
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -40,7 +40,8 @@ public class sendmessage extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession(true);
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staffmembers", "root", "root");
+            DataBase ob = new DataBase();
+            Connection con = ob.Connect();
             Statement statement = con.createStatement();
             String message = request.getParameter("message");
             String ID = request.getParameter("tousername");
@@ -48,55 +49,55 @@ public class sendmessage extends HttpServlet {
             String fromusername = request.getSession().getAttribute("session_username").toString();
             String type = request.getSession().getAttribute("session_type").toString();
             String sql;
-            if(type.equals("0")){
+            if (type.equals("0")) {
                 sql = "SELECT* FROM staffmembers.user WHERE username='" + ID + "';";
                 ResultSet rs = statement.executeQuery(sql);
                 rs.next();
-                if(rs.getString("type").equals("0")){
+                if (rs.getString("type").equals("0")) {
                     session.setAttribute("sendingconfirmationmess", "This staff not found! ");
-                    response.sendRedirect("Messages.jsp");
-                }
-            }
-            else{
-            if (Selected.equals("All")) {
-                sql = "SELECT* FROM staffmembers.subjecttostaff WHERE subjectid='" + ID + "';";
-                ResultSet rs = statement.executeQuery(sql);
-                if (!(rs.next())) {
-                    session.setAttribute("sendingconfirmationmess", "No subject Found! ");
-                    response.sendRedirect("Messages.jsp");
-                } else {
-                    sql = "SELECT* FROM staffmembers.subjecttostaff WHERE subjectid='" + ID + "';";
-                    rs = statement.executeQuery(sql);
-                    while (rs.next()) {
-                        sql = "INSERT INTO staffmembers.message(fromusername,tousername,content) VALUES"
-                                + "('" + fromusername + "','" + rs.getString("username") + "','" + message + "');";
-                        statement = con.createStatement();
-                        statement.executeUpdate(sql);
-                    }
-
                     response.sendRedirect("Messages.jsp");
                 }
             } else {
-                sql = "SELECT* FROM staffmembers.user WHERE username='" + ID + "';";
-                ResultSet rs = statement.executeQuery(sql);
-                if (!(rs.next())) {
-                    session.setAttribute("sendingconfirmationmess", "This staff not found! ");
-                    response.sendRedirect("Messages.jsp");
+                if (Selected.equals("All")) {
+                    sql = "SELECT* FROM staffmembers.subjecttostaff WHERE subjectid='" + ID + "';";
+                    ResultSet rs = statement.executeQuery(sql);
+                    if (!(rs.next())) {
+                        session.setAttribute("sendingconfirmationmess", "No subject Found! ");
+                        response.sendRedirect("Messages.jsp");
+                    } else {
+                        sql = "SELECT* FROM staffmembers.subjecttostaff WHERE subjectid='" + ID + "';";
+                        rs = statement.executeQuery(sql);
+                        while (rs.next()) {
+                            sql = "INSERT INTO staffmembers.message(fromusername,tousername,content) VALUES"
+                                    + "('" + fromusername + "','" + rs.getString("username") + "','" + message + "');";
+                            statement = con.createStatement();
+                            statement.executeUpdate(sql);
+                        }
+
+                        response.sendRedirect("Messages.jsp");
+                    }
                 } else {
                     sql = "SELECT* FROM staffmembers.user WHERE username='" + ID + "';";
-                    rs = statement.executeQuery(sql);
-                    if (rs.next()) {
-                        
-                        sql = "INSERT INTO staffmembers.message(fromusername,tousername,content) VALUES"
-                                + "('" + fromusername + "','" + rs.getString("username") + "','" + message + "');";
-                        statement.executeUpdate(sql);
+                    ResultSet rs = statement.executeQuery(sql);
+                    if (!(rs.next())) {
+                        session.setAttribute("sendingconfirmationmess", "This staff not found! ");
+                        response.sendRedirect("Messages.jsp");
+                    } else {
+                        sql = "SELECT* FROM staffmembers.user WHERE username='" + ID + "';";
+                        rs = statement.executeQuery(sql);
+                        if (rs.next()) {
+
+                            sql = "INSERT INTO staffmembers.message(fromusername,tousername,content) VALUES"
+                                    + "('" + fromusername + "','" + rs.getString("username") + "','" + message + "');";
+                            statement.executeUpdate(sql);
+                        }
+                        response.sendRedirect("Messages.jsp");
+
                     }
-                    response.sendRedirect("Messages.jsp");
-
                 }
-            }
 
-        }} catch (Exception ex) {
+            }
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

@@ -4,11 +4,10 @@
 <!DOCTYPE html>
 <html>
     <link type="text/css" rel="stylesheet" href="mycss.css">
-    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login</title>
+        <title>Login - Office Hours Management</title>
 
 
     </head>

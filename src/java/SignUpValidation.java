@@ -39,11 +39,11 @@ public class SignUpValidation extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-             Class.forName("com.mysql.cj.jdbc.Driver");// Class.forName("com.mysql.jdbc.Driver");
+
+            Class.forName("com.mysql.cj.jdbc.Driver");// Class.forName("com.mysql.jdbc.Driver");
             DataBase ob = new DataBase();
-               Connection con = ob.Connect();
-            
+            Connection con = ob.Connect();
+
             Statement statement = con.createStatement();
             PreparedStatement ps = null;
             String UserEmail = request.getParameter("Email");
@@ -68,7 +68,7 @@ public class SignUpValidation extends HttpServlet {
                 String code = sm.getRandom();
                 boolean sended = sm.Sendemail(UserEmail, Name, code);
                 if (sended) {
-                  //  session.setAttribute("session-authcode", code);
+                    //  session.setAttribute("session-authcode", code);
                     sql = "INSERT INTO staffmembers.user (password,email,name,type) VALUES"
                             + "('" + code + "','" + UserEmail + "','" + Name + "','" + type + "');";
 
@@ -110,15 +110,15 @@ public class SignUpValidation extends HttpServlet {
             throws ServletException, IOException {
         HttpSession s = request.getSession();
         String c = (String) s.getAttribute("captcha");
-        String verifyCaptcha  = request.getParameter("captcha");
-        if(c.equals(verifyCaptcha)){
-            request.setAttribute("username",request.getParameter("username"));
-            request.setAttribute("password",request.getParameter("password"));
+        String verifyCaptcha = request.getParameter("captcha");
+        if (c.equals(verifyCaptcha)) {
+            request.setAttribute("username", request.getParameter("username"));
+            request.setAttribute("password", request.getParameter("password"));
 
-            request.getRequestDispatcher("SignUp").forward(request,response); 
-        }else{
-            request.setAttribute("Error","InValid Captcha");
-            request.getRequestDispatcher("SignUp").forward(request,response);
+            request.getRequestDispatcher("SignUp").forward(request, response);
+        } else {
+            request.setAttribute("Error", "InValid Captcha");
+            request.getRequestDispatcher("SignUp").forward(request, response);
         }
     }
 

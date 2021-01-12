@@ -12,7 +12,6 @@
 <!DOCTYPE html>
 <html>
     <link type="text/css" rel="stylesheet" href="mycss.css">
-    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
     <script type="text/javascript">
         function sendajax() {
             var username = document.getElementById("username").value;
@@ -34,7 +33,7 @@
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home</title>
+        <title>Home - Office Hours Management</title>
     </head>
 
     <body>     
@@ -68,19 +67,19 @@
         %>
         <ul>
             <li><a href="Profile.jsp">Profile</a></li>
-            
+            <li><a href="Messages.jsp">Messages</a></li>
+            <li><a href="Notifications.jsp">Notifications</a></li>
+            <li><a href="meetings.jsp">Meetings</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="meetings.jsp">Meetings</a></li>
-            <li><a href="Notifications.jsp">Notifications</a></li>
-            <li><a href="Messages.jsp">Messages</a></li>
             <li><a href="Logout">Logout</a></li>
         </ul>
         <div style="margin-left: 12%">
             <form >
-                <label>Enter staff member username: </label><input id="username" name="username" placeholder="Staff member username"/>
+                <label>Enter staff member username: </label>
+                <input id="username" name="username" placeholder="Staff member username"/>
                 <br>
-                <input class = "getcon" type="submit" value="View Office hours" formaction="GetOfficehoursSchedule.jsp" class="update">
+                <input class = "Large" type="submit" value="View Office hours" formaction="GetOfficehoursSchedule.jsp" class="update">
                 <input class = "getcon" type="button" value="Get Contact" onclick="sendajax()" class="update">
                 <div id="show_response">  </div>
                     <p style="color:black;"><% out.print(checkstaff);

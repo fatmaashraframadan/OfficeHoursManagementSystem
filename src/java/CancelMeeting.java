@@ -37,14 +37,25 @@ public class CancelMeeting extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staffmembers", "root", "root");
+            DataBase ob = new DataBase();
+            Connection con = ob.Connect();
             Statement statement = con.createStatement();
             HttpSession session = request.getSession(true);
             String reservationid = request.getParameter("myradio");
+            String type = request.getSession().getAttribute("session_type").toString();
             String sql = "DELETE FROM staffmembers.reservation WHERE reservationID='" + reservationid + "';";
             statement.executeUpdate(sql);
-            session.setAttribute("cancelationconfirmationmess", "Deleted Succesfully! ");
-            response.sendRedirect("meetings.jsp");
+            out.println("<script type=\"text/javascript\">");
+                        out.println("window.alert('Meeting reservation cancelled successfully');");
+                        if(type.equals("1")){
+                        out.println("window.location.href=\"staffMeetings.jsp\";");}
+                        else{
+                            out.println("window.location.href=\"meetings.jsp\";");
+                        }
+                        out.println("</script>");
+                        
+            //session.setAttribute("cancelationconfirmationmess", "Deleted Succesfully! ");
+            //response.sendRedirect("meetings.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

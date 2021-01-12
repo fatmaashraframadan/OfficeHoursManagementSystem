@@ -12,10 +12,9 @@
 <!DOCTYPE html>
 <html>
     <link type="text/css" rel="stylesheet" href="mycss.css">
-    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
     <head>
 
-        <title>JSP Page</title>
+        <title>Messages - Office Hours Management</title>
         <script type="text/javascript">
             function sendajax() {
                 var from = document.getElementById("from").value;
@@ -87,7 +86,7 @@
 
             <form>
                 <!-- <table cellspacing="5" border="0"></table> -->
-                <table cellspacing="5" border="1">
+                <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
                     <tr>
 
                         <th> From </th>  
