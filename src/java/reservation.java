@@ -56,6 +56,7 @@ public class reservation extends HttpServlet {
                         + "('" + fromusernamer + "','" + tousername + "','" + radio + "');";
 
                 statement.executeUpdate(sql);
+                
                  session.setAttribute("reservationconfirmationmess", "Reservation Done Successfully! ");
                  response.sendRedirect("GetOfficehoursSchedule.jsp");
                 

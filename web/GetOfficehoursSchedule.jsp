@@ -48,7 +48,8 @@
                        session.setAttribute("session_tousername", staffusername);
                          }
                 staffusername= request.getSession().getAttribute("session_tousername").toString();
-                 sql = "SELECT * FROM staffmembers.officehours s INNER JOIN staffmembers.slot d ON s.slotid = d.slotid AND s.username ='" + staffusername + "';";
+                 sql = "SELECT * FROM staffmembers.officehours s INNER JOIN staffmembers.slot d "
+                         + "ON s.slotid = d.slotid AND s.username ='" + staffusername + "';";
                 ResultSet rs = statement.executeQuery(sql);
                 int counter = 1; 
                 
@@ -88,6 +89,7 @@
         </form>
          
         <% }%>
+        <a href="Userhome.jsp"><input type="button" value="Back to Homepage"/></a>
            
                 <p style="color:black;"><% out.print(confirmmessage);
                 session.setAttribute("reservationconfirmationmess", " ");%></p>   

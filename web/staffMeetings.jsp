@@ -67,6 +67,9 @@
             </table>
             <br>
             <input  class = "getcon" type="submit" value="Cancel" class="update">
+             <br> 
+            <input  class = "getcon" type="submit" formaction="CancelAllOnThisDay"
+                    value="Cancel all reservations on this date" class="update">
         </form>
 
         <% }%>

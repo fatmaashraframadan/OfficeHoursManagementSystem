@@ -63,15 +63,17 @@
         <h1 class="id">Welcome <%= rs.getString("name")%></h1>
         <%
             if (type.equals("0")) {
+                session.setAttribute("session_tousername",null);
         %>
         <ul>
             <li><a href="Profile.jsp">Profile</a></li>
-            <li><a href="Logout">Logout</a></li>
+            
             <li><a href="#contact">Contact</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="meetings.jsp">Meetings</a></li>
             <li><a href="Notifications.jsp">Notifications</a></li>
             <li><a href="Messages.jsp">Messages</a></li>
+            <li><a href="Logout">Logout</a></li>
         </ul>
         <div style="margin-left: 12%">
             <form >
@@ -99,13 +101,15 @@
                         <%} else{
         %>
         <ul>
-            <li><a href="Profile.jsp">Profile</a></li>
-            <li><a href="Logout">Logout</a></li>
-            <li><a href="Messages.jsp">Messages</a></li>
+            <li><a href="Profile.jsp">Profile</a></li>   
+            <li><a href="Messages.">Messages</a></li>
             <li><a href="#notifications">Notifications</a></li>
             <li><a href="staffMeetings.jsp">Meetings</a></li>
+            <li><a href="#officehours">Office Hours</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="#about">About</a></li>
+            <li><a href="Logout">Logout</a></li>
+            
         </ul>
         <div style="margin-left: 12%">
             <form >

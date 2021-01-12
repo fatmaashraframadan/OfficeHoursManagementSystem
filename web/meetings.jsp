@@ -67,9 +67,11 @@
             </table>
             <br>
             <input  class = "getcon" type="submit" value="Cancel" class="update">
+           
         </form>
 
         <% }%>
+        
             <p style="color:black;"><% out.print(confirmmessage);
                 session.setAttribute("cancelationconfirmationmess", " ");%></p>   
             <%
