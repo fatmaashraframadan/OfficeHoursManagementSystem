@@ -28,7 +28,7 @@ public class SendEmail {
         return String.format("%06d", number);
     }
 
-    public boolean Sendemail(String toemail, String toName, String code) {
+    public boolean Sendemail(String toemail, String toName, String content) {
         boolean sended = false;
         String toEmail = toemail;
         String FromEmail = "nardinee311nabil@gmail.com";
@@ -57,8 +57,7 @@ public class SendEmail {
             message.setFrom(new InternetAddress(FromEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
             message.setSubject("Email Verification");
-            message.setText("Hi," + toName + "\n Thanks for joining our Web Application! "
-                    + "Please Login with this password " + code);
+            message.setText("Hi," + toName + content);
             Transport.send(message);
             sended = true;
         } catch (Exception ex) {

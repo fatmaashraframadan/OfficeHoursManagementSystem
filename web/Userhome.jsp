@@ -10,6 +10,7 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -52,7 +53,9 @@
             }
             String username = request.getSession().getAttribute("session_username").toString();
             String type = request.getSession().getAttribute("session_type").toString();
-
+            String UserEmail = request.getSession().getAttribute("session_useremail").toString();
+            String name = request.getSession().getAttribute("session_name").toString();
+            
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staffmembers", "root", "root");
             Statement statement = con.createStatement();
@@ -66,6 +69,7 @@
             Date todays = formater.parse(today);
             Date dateofT;
             int days;
+            
         %>
         <h1 class="id">Welcome <%= rs.getString("name")%></h1>
         <%

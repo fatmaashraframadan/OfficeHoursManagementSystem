@@ -66,7 +66,9 @@ public class SignUpValidation extends HttpServlet {
                 //session.setAttribute("session_UserEmail", UserEmail);
                 SendEmail sm = new SendEmail();
                 String code = sm.getRandom();
-                boolean sended = sm.Sendemail(UserEmail, Name, code);
+                String content = "\n Thanks for joining our Web Application! "
+                    + "Please Login with this password " + code;
+                boolean sended = sm.Sendemail(UserEmail, Name, content);
                 if (sended) {
                     //  session.setAttribute("session-authcode", code);
                     sql = "INSERT INTO staffmembers.user (password,email,name,type) VALUES"

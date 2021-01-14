@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -62,13 +64,38 @@ public class LoginValidation extends HttpServlet {
                 if (email.equals(Email) && password1.equals(password) && type.equals(rs.getString("type"))) {
                     session.setAttribute("session_username", rs.getString("username"));
                     session.setAttribute("session_name", rs.getString("name"));
+                    String name = rs.getString("name");
                     session.setAttribute("session_useremail", Email);
                     session.setAttribute("session_password", password1);
                     session.setAttribute("session_type", type);
                     response.sendRedirect("Userhome.jsp");
 
                     check = true;
-
+                    
+                    
+                    statement = con.createStatement();
+                    sql = " Select * from staffmembers.notifications where toUsername = '"
+                            + rs.getString("username") + "';";
+                    rs = statement.executeQuery(sql);
+                    int counter = 0;
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String today = sdf.format(new Date()).toString();
+            SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+            Date todays = formater.parse(today);
+            Date dateofT;
+            int days;
+            SendEmail sm = new SendEmail();
+                    while (rs.next()) {
+                        if (!(rs.getString("date") == null)) {
+                            dateofT = formater.parse(rs.getString("date"));
+                            days = (int) ((todays.getTime() - dateofT.getTime()) / (1000 * 60 * 60 * 24));
+                            if (days == 0) {
+                                String Content = rs.getString("content");
+                                sm.Sendemail(Email, name, Content );
+                                
+                            }
+                        } 
+                    }
                 }
 
             }
