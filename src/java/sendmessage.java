@@ -53,6 +53,7 @@ public class sendmessage extends HttpServlet {
             
             boolean check = false;
             SendEmail sm = new SendEmail();
+            String subject = "New Message";
             if (type.equals("0")) {
                 sql = "SELECT* FROM staffmembers.user WHERE username='" + ID + "';";
                 ResultSet rs = statement.executeQuery(sql);
@@ -86,7 +87,7 @@ public class sendmessage extends HttpServlet {
                             String name = rs.getString("name");
                             statement.close();
                             
-                            sm.Sendemail(email, name, message );
+                            sm.Sendemail(email, subject, name, (fromusername + ": " +message) );
                         }
 
                         response.sendRedirect("Messages.jsp");
@@ -118,7 +119,7 @@ public class sendmessage extends HttpServlet {
 
                             
                             
-                            sm.Sendemail(email, name, message );
+                            sm.Sendemail(email, subject, name, (fromusername + ": " +message) );
                         }
                         response.sendRedirect("Messages.jsp");
 

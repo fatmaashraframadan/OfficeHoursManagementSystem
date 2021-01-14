@@ -15,6 +15,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link type="text/css" rel="stylesheet" href="mycss.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Notifications - Office Hours Management</title>
     </head>
@@ -50,10 +51,12 @@
                         if (days == 0) {%>             
             <li class="noti-li"> <%= rs.getString("content")%> </li>
                 <% }
-                     } else {%>
+                } else {%>
             <li class="noti-li"> <%= rs.getString("content")%> </li>
                 <%}
                     }%>
         </ul>
+        <br>
+        <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
     </body>
 </html>

@@ -96,7 +96,7 @@
                 <div id="show_response">  </div>
             </form> 
         </div>
-
+<a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
         <%
             } catch (Exception cnfe) {
                 System.err.println("Exception: " + cnfe);

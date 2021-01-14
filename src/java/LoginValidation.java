@@ -91,7 +91,8 @@ public class LoginValidation extends HttpServlet {
                             days = (int) ((todays.getTime() - dateofT.getTime()) / (1000 * 60 * 60 * 24));
                             if (days == 0) {
                                 String Content = rs.getString("content");
-                                sm.Sendemail(Email, name, Content );
+                                String subject = "Meeting due Today";
+                                sm.Sendemail(Email, subject, name, Content );
                                 
                             }
                         } 

@@ -31,6 +31,10 @@
                 xmlhttp.open("GET", "replyToMessage?from=" + from, true);
                 xmlhttp.send();
             }
+
+            function myFunction() {
+                document.getElementById("demo").style.display = 'block'";
+            }
         </script> 
     </head>
     <body>
@@ -74,53 +78,72 @@
             <input type="submit" value="send" class="update">
         </form>
         <br>
-        <p style="color:black;"><% out.print(confirmmessage);
-                session.setAttribute("sendingconfirmationmess", " ");%></p>  
+            <p style="color:black;"><% out.print(confirmmessage);
+            session.setAttribute("sendingconfirmationmess", " ");%></p>  
         <br>
         <% int counter = 1;
+            String toUser = "";
             while (rs.next()) {
+                toUser = "";
                 if (counter == 1) {
         %>
         <div id="show_response">
 
 
+            
             <form>
-                <!-- <table cellspacing="5" border="0"></table> -->
-                <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
-                    <tr>
+                
+            <!-- <table cellspacing="5" border="0"></table> -->
+            <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
+                <tr>
 
-                        <th> From </th>  
-                        <th>Content</th> 
-                            <% if (type.equals("1")) {%>
-                        <th>       </th>
-                            <%}
-                            %>
-                    </tr>
+                    <th> From </th>  
+                    <th>Content</th> 
+                        <% if (type.equals("1")) {%>
+                    <th>       </th>
+                        <%}
+                        %>
+                </tr>
 
-                    <%counter++;
-                        }
-                    %>
-                    <tr>
+                <%counter++;
+                    }
+                    
+                %>
+                <tr>
 
-                    <input type="hidden" value=<%=rs.getString("fromusername")%> id="from" style="border: none; background: none;"/>
-                    <td><%=rs.getString("fromusername")%></td>
-                    <td><%=rs.getString("content")%></td>
-                    <% if (type.equals("1")) {%>
-                    <td>
-                        <input type="button" id="replyButton" value="Reply" onclick="sendajax()" />
-                    </td>
-                    </tr>
-                    <%}
+                
+                    <td><input type="radio" name=myradio value=<%=rs.getString("fromusername")%> id="from">
+                        <%=rs.getString("fromusername")%>
+                <% toUser = rs.getString("fromusername"); 
+                System.out.println("toUser: " + toUser +"\n" + "rs.getString(\"fromusername\")" +
+                rs.getString("fromusername") ); %>
+                
+                <td><%=rs.getString("content")%></td>
+                <% if (type.equals("1")) {%>
+                <td>
+                  
+                    
+                 <!-- <input type="button" id="replyButton" value="Reply" onclick="sendajax()" />-->
+                 <input  type="submit"  value="Reply" 
+                            formaction="Reply.jsp"/> 
+                       
+                </td>
+
+                </tr>
+                <%}
                     }%>
-                    <%if (counter > 1) {%>
-                </table>
+                <%if (counter > 1) {%>
+            </table>
+ </form>
 
-            </form>
+<br>
+        <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
         </div>
-        <% }
-            } catch (Exception cnfe) {
-                System.err.println("Exception: " + cnfe);
-            }
-        %>
+        
+            <% }
+                } catch (Exception cnfe) {
+                    System.err.println("Exception: " + cnfe);
+                }
+            %>
     </body>
 </html>

@@ -61,12 +61,14 @@
                 <%if (counter > 1) {%>
             </table>
         </form>
-        <% } else {
-                out.println("<script type=\"text/javascript\">");
-                out.println("window.alert('No Staff Members found for this subject to display');");
-                out.println("window.location.href=\"Userhome.jsp\";");
-                out.println("</script>");
-            }%>
+        <br>
+        <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
+            <% } else {
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("window.alert('No Staff Members found for this subject to display');");
+                    out.println("window.location.href=\"Userhome.jsp\";");
+                    out.println("</script>");
+                }%>
 
         <%
             } catch (Exception cnfe) {

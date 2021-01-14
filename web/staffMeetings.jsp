@@ -95,7 +95,8 @@
             <input  class="Large"  type="submit" formaction="CancelAllOnThisDay"
                     value="Cancel all reservations on this date">
         </form>
-
+            <br>
+<a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
         <% } else {
                 out.println("<script type=\"text/javascript\">");
                 out.println("window.alert('No reserved meetings to display');");

@@ -66,16 +66,18 @@ public class SignUpValidation extends HttpServlet {
                 //session.setAttribute("session_UserEmail", UserEmail);
                 SendEmail sm = new SendEmail();
                 String code = sm.getRandom();
+                String subject = "Email Verification";
                 String content = "\n Thanks for joining our Web Application! "
                     + "Please Login with this password " + code;
-                boolean sended = sm.Sendemail(UserEmail, Name, content);
+                boolean sended = sm.Sendemail(UserEmail, subject, Name, content);
                 if (sended) {
                     //  session.setAttribute("session-authcode", code);
                     sql = "INSERT INTO staffmembers.user (password,email,name,type) VALUES"
                             + "('" + code + "','" + UserEmail + "','" + Name + "','" + type + "');";
 
                     statement.executeUpdate(sql);
-                    out.print("Verification mail is sent to you successfuly ,Please check your email to know your temporary password !");
+                    out.print("Verification mail is sent to you successfully, "
+                            + "Please check your email to know your temporary password !");
                 }
             }
 

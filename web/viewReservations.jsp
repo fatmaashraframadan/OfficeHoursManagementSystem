@@ -47,11 +47,13 @@
                 <td><%= status%></td>
             </tr>
         </table>
-        <%} else {
-                out.println("<script type=\"text/javascript\">");
-                out.println("window.alert('No reserved meetings to display');");
-                out.println("window.location.href=\"staffMeetings.jsp\";");
-                out.println("</script>");
-            }%>
+        <br>
+        <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
+            <%} else {
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("window.alert('No reserved meetings to display');");
+                    out.println("window.location.href=\"staffMeetings.jsp\";");
+                    out.println("</script>");
+                }%>
     </body>
 </html>

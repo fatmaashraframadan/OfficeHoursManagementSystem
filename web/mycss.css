@@ -12,6 +12,8 @@ nav{
     font-size: 50px;
 }
 
+
+
 button{
     transition-duration: 0.4s;
     border-color: black;
@@ -169,23 +171,23 @@ button:hover{
 }
 
 .notification {
-  background-color: transparent;
-  color: black;
-  text-decoration: none;
-  padding: 15px 26px;
-  position: relative;
-  display: inline-block;
-  border-radius: 2px;
+    background-color: transparent;
+    color: black;
+    text-decoration: none;
+    padding: 15px 26px;
+    position: relative;
+    display: inline-block;
+    border-radius: 2px;
 }
 
 .notification .badge {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  padding: 5px 10px;
-  border-radius: 50%;
-  background: red;
-  color: white;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
 }
 
 ul {
@@ -202,7 +204,7 @@ ul .noti{
     margin: 0;
     padding: 0;
     width: 30%;
-    
+
     height: 100%;
     overflow: auto;
 }

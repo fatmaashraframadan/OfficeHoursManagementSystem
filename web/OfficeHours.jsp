@@ -48,20 +48,21 @@
                         }%>
                 <tr>
                 <input type="hidden" value=<%=rs.getString("officehoursID")%> name="officeHoursID" style="border: none; background: none;"/>
-                    <td><%= rs.getString("officehoursID")%> </td> 
-                    <td><%= rs.getString("location")%></td> 
-                    <td><%= status%></td>
-                    <td><%= rs.getString("date")%></td>
-                    <td><%= rs.getString("start")%></td>
-                    <td><%= rs.getString("end")%></td>
-                    <td> <input class = "getcon" type="submit" value="Update" ></td>
-                    <td> <input class = "getcon" type="submit" value="Delete" formaction="DeleteOfficeHour" ></td>
+                <td><%= rs.getString("officehoursID")%> </td> 
+                <td><%= rs.getString("location")%></td> 
+                <td><%= status%></td>
+                <td><%= rs.getString("date")%></td>
+                <td><%= rs.getString("start")%></td>
+                <td><%= rs.getString("end")%></td>
+                <td> <input class = "getcon" type="submit" value="Update" ></td>
+                <td> <input class = "getcon" type="submit" value="Delete" formaction="DeleteOfficeHour" ></td>
                 </tr>
-                <% } %>
+                <% }%>
             </table>
             <input class = "Large" type="submit" value="Add new Office Hour" >
         </form>
-        
 
+        <br>
+        <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
     </body>
 </html>
