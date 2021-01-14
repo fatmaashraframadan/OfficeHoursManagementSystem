@@ -45,7 +45,7 @@ public class SendReply extends HttpServlet {
             Statement statement = con.createStatement();
             String from = request.getSession().getAttribute("session_username").toString();
             String to = request.getParameter("ToEmail");
-            out.print(to);
+            
             String content = request.getParameter("message");
             String sql;
             sql = "INSERT INTO staffmembers.message(fromusername,tousername,content) VALUES"

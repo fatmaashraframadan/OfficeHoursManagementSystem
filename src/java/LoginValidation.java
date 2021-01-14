@@ -61,6 +61,7 @@ public class LoginValidation extends HttpServlet {
                 password1 = rs.getString("password");
                 if (email.equals(Email) && password1.equals(password) && type.equals(rs.getString("type"))) {
                     session.setAttribute("session_username", rs.getString("username"));
+                    session.setAttribute("session_name", rs.getString("name"));
                     session.setAttribute("session_useremail", Email);
                     session.setAttribute("session_password", password1);
                     session.setAttribute("session_type", type);

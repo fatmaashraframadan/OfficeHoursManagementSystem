@@ -16,6 +16,7 @@
         <title>Meetings - Office Hours Management</title>
     </head>
     <body>
+
         <%
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -25,13 +26,37 @@
                 String confirmmessage = "";
                 if (request.getSession().getAttribute("cancelationconfirmationmess") != null) {
                     confirmmessage = request.getSession().getAttribute("cancelationconfirmationmess").toString();
-
                 }
-                String sql = "SELECT * FROM staffmembers.reservation s INNER JOIN staffmembers.officehours b ON s.officehoursID = b.officehoursID INNER JOIN staffmembers.user c ON s.tousername = c.username AND c.username='" + username + "'  INNER JOIN staffmembers.slot t ON b.slotid = t.slotid;";
+                String sql = "SELECT * FROM staffmembers.officehours b INNER JOIN staffmembers.slot s ON s.slotid = b.slotid "
+                        + "INNER JOIN staffmembers.user c ON  c.username = b.username AND c.username='" + username + "';";
                 ResultSet rs = statement.executeQuery(sql);
-                int counter = 1;
-                while (rs.next()) {
-                    if (counter == 1) {
+
+        %>
+        <form action="viewReservations.jsp">
+            <label> Select office hour slot: </label>
+            <select id="slot" name="slot" >
+
+                <% while (rs.next()) {
+
+                %>
+                <option value= <%= rs.getString("officehoursID")%> > <%= rs.getString("date") + " FROM: " 
+                        + rs.getString("start") + " TO: " + rs.getString("end")%> </option>
+
+                <%
+                    }
+                %>
+            </select>
+            <input class = "Large" value="View Reservations" type="submit"/>
+        </form>
+        <br>
+
+
+        <%
+            sql = "SELECT * FROM staffmembers.reservation s INNER JOIN staffmembers.officehours b ON s.officehoursID = b.officehoursID INNER JOIN staffmembers.user c ON s.tousername = c.username AND c.username='" + username + "'  INNER JOIN staffmembers.slot t ON b.slotid = t.slotid;";
+            rs = statement.executeQuery(sql);
+            int counter = 1;
+            while (rs.next()) {
+                if (counter == 1) {
         %>
         <form action="CancelMeeting">
             <table cellspacing="5" border="0" style="height: 100%; width: 100%;"></table>
@@ -71,16 +96,16 @@
                     value="Cancel all reservations on this date">
         </form>
 
-        <% }else{
+        <% } else {
                 out.println("<script type=\"text/javascript\">");
                 out.println("window.alert('No reserved meetings to display');");
                 out.println("window.location.href=\"Userhome.jsp\";");
                 out.println("</script>");
-}%>
+            }%>
         <p style="color:black;">
             <%
-                    out.print(confirmmessage);
-                    session.setAttribute("cancelationconfirmationmess", " ");%></p>   
+                out.print(confirmmessage);
+                session.setAttribute("cancelationconfirmationmess", " ");%></p>   
             <%
                 } catch (Exception cnfe) {
                     System.err.println("Exception: " + cnfe);

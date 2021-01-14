@@ -7,7 +7,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.servlet.ServletException;
@@ -15,14 +14,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Nardin
+ * @author Maria
  */
-@WebServlet(urlPatterns = {"/CancelMeeting"})
-public class CancelMeeting extends HttpServlet {
+@WebServlet(urlPatterns = {"/DeleteOfficeHour"})
+public class DeleteOfficeHour extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,59 +39,30 @@ public class CancelMeeting extends HttpServlet {
             DataBase ob = new DataBase();
             Connection con = ob.Connect();
             Statement statement = con.createStatement();
-            HttpSession session = request.getSession(true);
-            String reservationid = request.getParameter("myradio");
-            String type = request.getSession().getAttribute("session_type").toString();
-            String fromUser = request.getSession().getAttribute("session_username").toString();
-            String sql;
-            ResultSet rs ;
-            String toUser;
-            String content;
-            if (type.equals("1")) {
-                sql = "SELECT * FROM staffmembers.reservation s INNER JOIN "
-                        + "staffmembers.officehours b ON s.officehoursID = b.officehoursID "
-                        + "INNER JOIN staffmembers.user c ON s.tousername = c.username "
-                        + "INNER JOIN staffmembers.slot t "
-                        + "ON b.slotid = t.slotid AND s.reservationID ='" + reservationid + "';";
-                rs = statement.executeQuery(sql);
-                rs.next();
-                toUser = rs.getString("fromusername");
-                content = rs.getString("name") + "(" + fromUser + ") has cancelled "
-                        + "the reservation on date " + rs.getString("date") + " from ["
-                        + rs.getString("start") + " - " + rs.getString("end") + "]";
-                sql = "INSERT INTO staffmembers.notifications (toUsername, content) values ('"
-                        + toUser + "','" + content + "');";
-                statement.executeUpdate(sql);
-            }else{
-                sql = "SELECT * FROM staffmembers.reservation s INNER JOIN "
-                        + "staffmembers.officehours b ON s.officehoursID = b.officehoursID "
-                        + "INNER JOIN staffmembers.user c ON s.fromusername = c.username "
-                        + "INNER JOIN staffmembers.slot t "
-                        + "ON b.slotid = t.slotid AND s.reservationID ='" + reservationid + "';";
-                rs = statement.executeQuery(sql);
-                rs.next();
-                toUser = rs.getString("tousername");
-                content = rs.getString("name") + "(" + fromUser + ") has cancelled "
+            String username = request.getSession().getAttribute("session_username").toString();
+            String officehoursID = request.getParameter("officeHoursID");
+            String sql = "SELECT * FROM staffmembers.reservation s INNER JOIN "
+                    + "staffmembers.officehours b ON s.officehoursID = b.officehoursID "
+                    + "INNER JOIN staffmembers.user c ON s.tousername = c.username "
+                    + "AND c.username='" + username + "'  INNER JOIN staffmembers.slot t "
+                    + "ON b.slotid = t.slotid AND s.officehoursID ='" + officehoursID + "';";
+            ResultSet rs = statement.executeQuery(sql);
+            if (rs.next()) {
+                String toUser = rs.getString("fromusername");
+                String fromUser = rs.getString("tousername");
+                String content = rs.getString("name") + "(" + fromUser + ") has cancelled "
                         + "the reservation on date " + rs.getString("date") + " from ["
                         + rs.getString("start") + " - " + rs.getString("end") + "]";
                 sql = "INSERT INTO staffmembers.notifications (toUsername, content) values ('"
                         + toUser + "','" + content + "');";
                 statement.executeUpdate(sql);
             }
-            sql = "DELETE FROM staffmembers.reservation WHERE reservationID='" + reservationid + "';";
+            sql = "Delete from staffmembers.officehours where officehoursID ='" + officehoursID + "';";
             statement.executeUpdate(sql);
-            
             out.println("<script type=\"text/javascript\">");
-            out.println("window.alert('Meeting reservation cancelled successfully');");
-            if (type.equals("1")) {
-                out.println("window.location.href=\"staffMeetings.jsp\";");
-            } else {
-                out.println("window.location.href=\"meetings.jsp\";");
-            }
+            out.println("window.alert('Office Hour has been deleted successfully!');");
+            out.println("window.location.href=\"OfficeHours.jsp\";");
             out.println("</script>");
-
-            //session.setAttribute("cancelationconfirmationmess", "Deleted Succesfully! ");
-            //response.sendRedirect("meetings.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -4,14 +4,56 @@
     Author     : Nardin
 --%>
 
+
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Notifications - Office Hours Management</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h2 style="text-align: center; color:blue;"> Notifications </h2>
+        <%
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/staffmembers";
+            String user = "root";
+            String pass = "root";
+            Connection con = null;
+            con = DriverManager.getConnection(url, user, pass);
+            Statement statement = con.createStatement();
+            String username = request.getSession().getAttribute("session_username").toString();
+            String sql = " Select * from staffmembers.notifications where toUsername = '"
+                    + username + "';";
+            ResultSet rs = statement.executeQuery(sql);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String today = sdf.format(new Date()).toString();
+            SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+            Date todays = formater.parse(today);
+            Date dateofT;
+            int days;
+
+        %>
+
+        <ul class="noti">
+            <% while (rs.next()) {
+                    if (!(rs.getString("date") == null)) {
+                        dateofT = formater.parse(rs.getString("date"));
+                        days = (int) ((todays.getTime() - dateofT.getTime()) / (1000 * 60 * 60 * 24));
+                        if (days == 0) {%>             
+            <li class="noti-li"> <%= rs.getString("content")%> </li>
+                <% }
+                     } else {%>
+            <li class="noti-li"> <%= rs.getString("content")%> </li>
+                <%}
+                    }%>
+        </ul>
     </body>
 </html>

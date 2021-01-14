@@ -4,6 +4,8 @@
     Author     : Nardin
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -58,17 +60,40 @@
             String sql = "SELECT* FROM staffmembers.user WHERE username='" + username + "';";
             ResultSet rs = statement.executeQuery(sql);
             rs.next();
-
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String today = sdf.format(new Date()).toString();
+            SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+            Date todays = formater.parse(today);
+            Date dateofT;
+            int days;
         %>
         <h1 class="id">Welcome <%= rs.getString("name")%></h1>
         <%
             if (type.equals("0")) {
-                session.setAttribute("session_tousername",null);
+                session.setAttribute("session_tousername", null);
+                sql = " Select * from staffmembers.notifications where toUsername = '"
+                        + username + "';";
+                rs = statement.executeQuery(sql);
+                int counter = 0;
+                while (rs.next()) {
+                    if (!(rs.getString("date") == null)) {
+                        dateofT = formater.parse(rs.getString("date"));
+                        days = (int) ((todays.getTime() - dateofT.getTime()) / (1000 * 60 * 60 * 24));
+                        if (days == 0) {
+                            counter++;
+                        }
+                    } else {
+                        counter++;
+                    }
+                }
+
+
         %>
         <ul>
             <li><a href="Profile.jsp">Profile</a></li>
             <li><a href="Messages.jsp">Messages</a></li>
-            <li><a href="Notifications.jsp">Notifications</a></li>
+            <li><a href="Notifications.jsp"class="notification"> <span>Notifications</span>
+                    <span class="badge" ><%= counter%> </span></a></li>
             <li><a href="meetings.jsp">Meetings</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="#about">About</a></li>
@@ -83,7 +108,7 @@
                 <input class = "getcon" type="button" value="Get Contact" onclick="sendajax()" class="update">
                 <div id="show_response">  </div>
                     <p style="color:black;"><% out.print(checkstaff);
-                        session.setAttribute("checkstaffFound", " ");%></p> 
+                    session.setAttribute("checkstaffFound", " ");%></p> 
             </form>
         </div>
         <div style="margin-left: 12%">
@@ -94,22 +119,39 @@
                 <input class = "getcon" type="submit" value="view staff" formaction="GetSubjectStaff.jsp" class="update">
 
                     <p style="color:black;"><% out.print(check);
-                        session.setAttribute("checkFound", " ");%></p> 
+                    session.setAttribute("checkFound", " ");%></p> 
             </form>
         </div>
 
-                        <%} else{
+        <%} else {
+                sql = " Select * from staffmembers.notifications where toUsername = '"
+                        + username + "';";
+                rs = statement.executeQuery(sql);
+                int counter = 0;
+                while (rs.next()) {
+                    if (!(rs.getString("date") == null)) {
+                        dateofT = formater.parse(rs.getString("date"));
+                        days = (int) ((todays.getTime() - dateofT.getTime()) / (1000 * 60 * 60 * 24));
+                        if (days == 0) {
+                            counter++;
+                        }
+                    } else {
+                        counter++;
+                    }
+                }
+            
         %>
         <ul>
             <li><a href="Profile.jsp">Profile</a></li>   
-            <li><a href="Messages.">Messages</a></li>
-            <li><a href="#notifications">Notifications</a></li>
+            <li><a href="Messages.jsp">Messages</a></li>
+            <li><a href="Notifications.jsp" class="notification"> <span>Notifications</span>
+                    <span class="badge"><%= counter%> </span></a></li>
             <li><a href="staffMeetings.jsp">Meetings</a></li>
-            <li><a href="#officehours">Office Hours</a></li>
+            <li><a href="OfficeHours.jsp">Office Hours</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="Logout">Logout</a></li>
-            
+
         </ul>
         <div style="margin-left: 12%">
             <form >

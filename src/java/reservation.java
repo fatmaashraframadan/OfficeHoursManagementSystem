@@ -57,18 +57,45 @@ public class reservation extends HttpServlet {
             } else {
                 String tousername = request.getSession().getAttribute("session_tousername").toString();
                 String fromusernamer = request.getSession().getAttribute("session_username").toString();
+                String fromName = request.getSession().getAttribute("session_name").toString();
                 sql = "INSERT INTO staffmembers.reservation (fromusername,tousername,officehoursID) VALUES"
                         + "('" + fromusernamer + "','" + tousername + "','" + radio + "');";
-
+                statement.executeUpdate(sql);
+                sql = "SELECT * FROM "
+                        + "staffmembers.officehours b INNER JOIN staffmembers.slot t ON t.slotid = b.slotid "
+                        + " AND b.officehoursID ='" + radio + "' INNER JOIN staffmembers.user c ON c.username = b.username;";
+                rs = statement.executeQuery(sql);
+               rs.next();
+                String content = fromName + "(" + fromusernamer + ") has reserved "
+                        + "the office hour on date " + rs.getString("date") + " from ["
+                        + rs.getString("start") + " - " + rs.getString("end") + "]";
+                out.print(content);
+                statement = con.createStatement();
+                sql = "INSERT INTO staffmembers.notifications (toUsername, content) values ('"
+                        + tousername + "','" + content + "');";
+                statement.executeUpdate(sql);
+                //Notification on day of the meeting(to student)
+                content = "You have a meeting today with " + 
+                        rs.getString("name") + "(" + tousername + ")" + " from ["
+                        + rs.getString("start") + " - " + rs.getString("end") + "]";
+                statement = con.createStatement();
+                sql = "INSERT INTO staffmembers.notifications (toUsername, content, date) values ('"
+                        + fromusernamer + "','" + content + "','"+ rs.getString("date") + "');";
+                statement.executeUpdate(sql);
+                //Notification on day of the meeting(to staff member)
+                content = "You have a meeting today with " + fromName + "(" + fromusernamer + ") "
+                        + " from [" + rs.getString("start") + " - " + rs.getString("end") + "]";
+                statement = con.createStatement();
+                sql = "INSERT INTO staffmembers.notifications (toUsername, content,date) values ('"
+                        + tousername + "','" + content + "','" + rs.getString("date") + "');";
                 statement.executeUpdate(sql);
                 out.println("<script type=\"text/javascript\">");
                 out.println("window.alert('Reservation Done Successfully!');");
                 out.println("window.location.href=\"GetOfficehoursSchedule.jsp\";");
                 out.println("</script>");
-                
+
                 //session.setAttribute("reservationconfirmationmess", "Reservation Done Successfully! ");
                 //response.sendRedirect("GetOfficehoursSchedule.jsp");
-
             }
         } catch (Exception ex) {
             ex.printStackTrace();
