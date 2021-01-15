@@ -83,6 +83,7 @@
                     %>
                Location:
                <input type="text" name="Location" placeholder="Enter location of your office hour.." value="">
+               <input type="text" name="date" placeholder="Enter the date of your office hour.." value="">
                Status:
               <select id="status" name="status" >
                     <option value="1">Online</option> 
@@ -91,8 +92,8 @@
                Slot:
                 <select id="slot" name="slot" >
                     <% while(rs.next()){ %>
-                    <option value="<%= rs.getString("slotid") %>"> <%= (rs.getString("date")
-                    + " " + rs.getString("start") + " " + rs.getString("end"))%> </option> 
+                    <option value="<%= rs.getString("slotid") %>"> 
+                  <%= (rs.getString("start") + " " + rs.getString("end"))%> </option> 
                     <% } %>
                 </select> 
                <input type="submit" formaction="AddOfficeHour">

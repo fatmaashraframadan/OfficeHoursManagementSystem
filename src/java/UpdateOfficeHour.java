@@ -48,8 +48,7 @@ public class UpdateOfficeHour extends HttpServlet {
             String location = request.getParameter("location");
             String status = request.getParameter("status");
             String date = request.getParameter("date");
-            String start = request.getParameter("start");
-            String end = request.getParameter("end");
+            String slot=request.getParameter("slot");
             String dateValidation[] = date.split("/");
             boolean check = false;
             if (Integer.parseInt(dateValidation[0]) <= 31 && Integer.parseInt(dateValidation[1]) <= 12
@@ -63,11 +62,9 @@ public class UpdateOfficeHour extends HttpServlet {
             }
             if(check){
                 String sql = "Update staffmembers.officehours set location = '" + location + "' , online = '" + status
-                        + "' where officehoursID = '" + officehoursID + "';" ;
+                        + "', slotid='"+slotid+"',date='"+date+"' where officehoursID = '" + officehoursID + "';" ;
                 statement.executeUpdate(sql);
-                sql = "Update staffmembers.slot set date = '" + date + "' , start = '" + start
-                        + "' , end = '" + end + "' where slotid = '" + slotid + "';" ;
-                statement.executeUpdate(sql);
+         
                 out.println("<script type=\"text/javascript\">");
                 out.println("window.alert('Updated office hour successfully!');");
                 out.println("window.location.href=\"OfficeHours.jsp\";");

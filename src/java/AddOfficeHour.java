@@ -45,9 +45,9 @@ public class AddOfficeHour extends HttpServlet {
             String location = request.getParameter("Location");
             String status = request.getParameter("status");
             String slotid = request.getParameter("slot");
-            
-            String sql = "Insert into staffmembers.officehours (username,location,online,slotid) values ('" + username +
-                 "','" +   location + "','" + status + "','" + slotid + "');";
+            String date=request.getParameter("date");
+            String sql = "Insert into staffmembers.officehours (username,location,online,slotid,date) values ('" + username +
+                 "','" +   location + "','" + status + "','" + slotid + "','" + date + "');";
             statement.executeUpdate(sql);
             
             out.println("<script type=\"text/javascript\">");

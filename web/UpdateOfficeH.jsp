@@ -61,8 +61,16 @@
                 </select>
             </td>
             <td><input name="date" id="date" type="text" value=<%= rs.getString("date")%>></td>
-            <td><input name="start" id="start" type="text" value=<%= rs.getString("start")%>></td>
-            <td><input name="end" id="end" type="text" value=<%= rs.getString("end")%>></td>
+            <%  sql = "Select * from staffmembers.slot;";
+             rs = statement.executeQuery(sql);%>
+                <td>
+                 <select id="slot" name="slot" >
+                    <% while(rs.next()){ %>
+                    <option value="<%= rs.getString("slotid") %>"> <%= 
+                   (rs.getString("start") + " " + rs.getString("end"))%> </option> 
+                    <% } %>
+                </select> 
+            </td>
             <%}%>
           </table>
           <input type="submit" value="Update" formaction="UpdateOfficeHour">
