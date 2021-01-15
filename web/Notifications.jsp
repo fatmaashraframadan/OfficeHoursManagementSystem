@@ -50,7 +50,7 @@
 
         </style>
     </head>
-    <body>
+    <body  style="font-size:20px;">
         <h2 style="text-align: center; color:blue;"> Notifications </h2>
         <%
             Class.forName("com.mysql.jdbc.Driver");

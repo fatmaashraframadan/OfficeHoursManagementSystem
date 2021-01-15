@@ -33,6 +33,7 @@
 
         %>
         <form action="viewReservations.jsp">
+            <br>
             <label> Select office hour slot: </label>
             <select id="slot" name="slot" >
 
@@ -93,7 +94,7 @@
             <input  class = "getcon" type="submit" value="Cancel" class="update">
             <br> 
             <input  class="Large"  type="submit" formaction="CancelAllOnThisDay"
-                    value="Cancel all reservations on this date">
+                    value="Cancel all reservations on this date"style="width:290px;">
         </form>
             <br>
 <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>

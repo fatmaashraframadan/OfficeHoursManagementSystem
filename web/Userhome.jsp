@@ -18,19 +18,20 @@
     <script type="text/javascript">
         function sendajax() {
             var username = document.getElementById("username").value;
-
-
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function ()
-            {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-                {
-                    document.getElementById("show_response").innerHTML = xmlhttp.responseText;
+            if (isNaN(username)) {
+                alert("This Field must be number ! ");
+            } else {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                    {
+                        document.getElementById("show_response").innerHTML = xmlhttp.responseText;
+                    }
                 }
-            }
 
-            xmlhttp.open("GET", "GetContact?username=" + username, true);
-            xmlhttp.send();
+                xmlhttp.open("GET", "GetContact?username=" + username, true);
+                xmlhttp.send();
+            }
         }
     </script>
 
@@ -55,7 +56,7 @@
             String type = request.getSession().getAttribute("session_type").toString();
             String UserEmail = request.getSession().getAttribute("session_useremail").toString();
             String name = request.getSession().getAttribute("session_name").toString();
-            
+
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staffmembers", "root", "root");
             Statement statement = con.createStatement();
@@ -69,7 +70,7 @@
             Date todays = formater.parse(today);
             Date dateofT;
             int days;
-            
+
         %>
         <h1 class="id">Welcome <%= rs.getString("name")%></h1>
         <%
@@ -93,7 +94,7 @@
 
 
         %>
-        <ul>
+        <ul style="margin-right: 10%">
             <li><a href="Profile.jsp">Profile</a></li>
             <li><a href="Messages.jsp">Messages</a></li>
             <li><a href="Notifications.jsp"class="notification"> <span>Notifications</span>
@@ -103,19 +104,25 @@
             <li><a href="#about">About</a></li>
             <li><a href="Logout">Logout</a></li>
         </ul>
-        <div style="margin-left: 12%">
+        <div style="margin-left: 15%">
             <form >
                 <label>Enter staff member username: </label>
                 <input id="username" name="username" placeholder="Staff member username"/>
                 <br>
-                <input class = "Large" type="submit" value="View Office hours" formaction="GetOfficehoursSchedule.jsp" class="update">
+                <input style="width: 200px;" class = "Large" type="submit" value="View Office hours" formaction="GetOfficehoursSchedule.jsp" class="update">
                 <input class = "getcon" type="button" value="Get Contact" onclick="sendajax()" class="update">
                 <div id="show_response">  </div>
                     <p style="color:black;"><% out.print(checkstaff);
                     session.setAttribute("checkstaffFound", " ");%></p> 
             </form>
         </div>
-        <div style="margin-left: 12%">
+        <br>
+        <hr style="margin-left:10%">
+        <br>
+
+
+        <div style="margin-left: 15%">
+
             <form >
 
                 <label>Enter Subject ID: </label><input id="subjectID" name="subjectID" placeholder="Subject ID"/>
@@ -128,22 +135,22 @@
         </div>
 
         <%} else {
-                sql = " Select * from staffmembers.notifications where toUsername = '"
-                        + username + "';";
-                rs = statement.executeQuery(sql);
-                int counter = 0;
-                while (rs.next()) {
-                    if (!(rs.getString("date") == null)) {
-                        dateofT = formater.parse(rs.getString("date"));
-                        days = (int) ((todays.getTime() - dateofT.getTime()) / (1000 * 60 * 60 * 24));
-                        if (days == 0) {
-                            counter++;
-                        }
-                    } else {
+            sql = " Select * from staffmembers.notifications where toUsername = '"
+                    + username + "';";
+            rs = statement.executeQuery(sql);
+            int counter = 0;
+            while (rs.next()) {
+                if (!(rs.getString("date") == null)) {
+                    dateofT = formater.parse(rs.getString("date"));
+                    days = (int) ((todays.getTime() - dateofT.getTime()) / (1000 * 60 * 60 * 24));
+                    if (days == 0) {
                         counter++;
                     }
+                } else {
+                    counter++;
                 }
-            
+            }
+
         %>
         <ul>
             <li><a href="Profile.jsp">Profile</a></li>   
@@ -157,7 +164,7 @@
             <li><a href="Logout">Logout</a></li>
 
         </ul>
-        <div style="margin-left: 12%">
+        <div style="margin-left: 15%">
             <form >
                 <label>Enter student username: </label><input id="username" name="username"
                                                               placeholder="Student username"/>

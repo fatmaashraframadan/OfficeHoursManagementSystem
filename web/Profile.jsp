@@ -18,17 +18,20 @@
             var password = document.getElementById("password").value;
             var phonenumber = document.getElementById("phonenumber").value;
 
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function ()
-            {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-                {
-                    document.getElementById("show_response").innerHTML = xmlhttp.responseText;
+            if (password.toString().length >= 8 && name != "" && email != "" && phonenumber != "") {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function ();
+                xmlhttp.onreadystatechange = function (){
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                    {
+                        document.getElementById("show_response").innerHTML = xmlhttp.responseText;
+                    }
                 }
+                xmlhttp.open("GET", "UpdateProfile?email=" + email + "&name=" + name + "&phonenumber=" + phonenumber + "&password=" + password, true);
+                xmlhttp.send();
+            } else {
+                alert("All fields must be filled and password must be >= 8 characters !");
             }
-
-            xmlhttp.open("GET", "UpdateProfile?email=" + email + "&name=" + name + "&phonenumber=" + phonenumber + "&password=" + password, true);
-            xmlhttp.send();
         }
     </script> 
 
@@ -79,28 +82,28 @@
                         <td><input class="lab"type= "text" id="password" name="password" value="<%=password%>"/></td>
 
                     </tr>
-       
+
                     <tr>
                         <td> <label >Phone Number:        </label></td>
                         <td><input class="lab"type= "text" id="phonenumber" name="phonenumber" value="<%=phonenumber%>"/></td>
 
                     </tr>
-         
+
                     <tr>
                         <td><label >Email Address:       </label></td>
                         <td><input class="lab"type= "text" id="email" name="email" value="<%=Email%>"/></td>     
                     </tr>
-           
+
                 </table>
                 <input type="button" value="Save Update" onclick="sendajax()" class="update">
                 <div id="show_response">  </div>
             </form> 
         </div>
-<a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
-        <%
-            } catch (Exception cnfe) {
-                System.err.println("Exception: " + cnfe);
-            }
-        %>
+        <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
+            <%
+                } catch (Exception cnfe) {
+                    System.err.println("Exception: " + cnfe);
+                }
+            %>
     </body>
 </html>
