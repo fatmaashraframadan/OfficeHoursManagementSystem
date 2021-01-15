@@ -97,6 +97,7 @@ public class sendmessage extends HttpServlet {
                             String email = rs.getString("email");
                             String name = rs.getString("name");
                             statement.close();
+                            statement = con.createStatement();
                             sql = "Select * from staffmembers.user where username='" + fromusername + "';";
                             rs = statement.executeQuery(sql);
                             String  Name = "";

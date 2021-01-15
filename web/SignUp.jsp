@@ -70,7 +70,7 @@
         <title>SignUp - Office Hours Management</title>
 
     </head>
-    <body>
+    <body class="signUp">
         <header>
         <h1 class = "signh">SignUp</h1>
         </header>

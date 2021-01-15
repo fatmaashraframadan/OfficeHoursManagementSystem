@@ -1,18 +1,21 @@
 body{  
     background-color: #F8F8F8;
+    background-image: url(".png");
+    background-repeat: no-repeat;
+    background-size: 100%;
     margin: 0px;
     
 }
 
 header {
-    background-color: #F8F8F8;
+    
     color: black;
     text-align: center;
     padding: 20px;
 }
 
-.index{
-    background-image: url("146726282-online-education-seamless-pattern-black-school-line-icons-on-white-background-e-learning-t.png");
+.index, .signUp, .logIn{
+    background-image: url("UV2u354mXsAXSdWOV66zdeWmqKB8gAjEqg1qrAeW7NXAN36qzjiWdUGNyArDR6p00kxQ_XIDCdgG5Y1ehE9G6_TSgSRvnYRV9l53.png");
     background-repeat: no-repeat;
     background-size: 100%;
     /*background-image:url("digital.jpg");*/
@@ -81,8 +84,8 @@ button:hover{
     right:35%;
     position:absolute;
     padding: 10px;
-
     background-color: white;
+    opacity: 0.6;
     border-radius: 10px;
 }
 

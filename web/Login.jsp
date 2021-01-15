@@ -11,7 +11,7 @@
 
 
     </head>
-    <body>
+    <body class="logIn">
         <% try {
 
                 String confirmmessage = " ";
