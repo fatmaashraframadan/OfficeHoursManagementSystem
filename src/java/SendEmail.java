@@ -24,8 +24,8 @@ public class SendEmail {
 
     public String getRandom() {
         Random rand = new Random();
-        int number = rand.nextInt(9999999);
-        return String.format("%06d", number);
+int number = rand.nextInt(99999999);
+        return String.format("%08d", number);
     }
 
     public boolean Sendemail(String toemail, String subject, String toName, String content) {

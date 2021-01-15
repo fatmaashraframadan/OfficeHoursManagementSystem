@@ -33,6 +33,9 @@
             String OID = "";
             String SID = "";
         %>
+        <header>
+            <h1> Office Hours </h1>
+        </header>
         <form>
             <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
                 <tr>

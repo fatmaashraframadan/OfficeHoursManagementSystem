@@ -94,8 +94,6 @@
                         counter++;
                     }
                 }
-
-
         %>
         <ul>
             <li><a href="Profile.jsp">Profile</a></li>
