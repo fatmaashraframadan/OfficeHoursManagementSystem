@@ -50,30 +50,41 @@ public class sendmessage extends HttpServlet {
 
             String type = request.getSession().getAttribute("session_type").toString();
             String sql;
-            
+
             boolean check = false;
             SendEmail sm = new SendEmail();
             String subject = "New Message";
             if (type.equals("0")) {
                 sql = "SELECT* FROM staffmembers.user WHERE username='" + ID + "';";
                 ResultSet rs = statement.executeQuery(sql);
-                if(rs.next()){
-                String newType = rs.getString("type");
-                if (newType.equals("0")) {
-                    session.setAttribute("sendingconfirmationmess", "This staff not found! ");
-                    response.sendRedirect("Messages.jsp");
-                    check = true;
-                }out.print(check);
-            } }
-            if (check == false) {
-                out.print("Inside else if");
-                if (Selected.equals("All")) {
+                if (rs.next()) {
+                    String newType = rs.getString("type");
+                    if (newType.equals("0")) {
+                        check = true;
+                        out.println("<script type=\"text/javascript\">");
+                    out.println("window.alert('This staff member is not found!');");
+                    out.println("window.location.href=\"Messages.jsp\";");
+                    out.println("</script>");
+                        //session.setAttribute("sendingconfirmationmess", "This staff not found! ");
+                        //response.sendRedirect("Messages.jsp");
+                        
+                    }
                     
+                }
+            }
+            if (check == false) {
+                
+                if (Selected.equals("All")) {
+
                     sql = "SELECT* FROM staffmembers.subjecttostaff WHERE subjectid='" + ID + "';";
                     ResultSet rs = statement.executeQuery(sql);
                     if (!(rs.next())) {
-                        session.setAttribute("sendingconfirmationmess", "No subject Found! ");
-                        response.sendRedirect("Messages.jsp");
+                        //session.setAttribute("sendingconfirmationmess", "No subject Found! ");
+                       //response.sendRedirect("Messages.jsp");
+                        out.println("<script type=\"text/javascript\">");
+                    out.println("window.alert('No subject with this ID was Found!');");
+                    out.println("window.location.href=\"Messages.jsp\";");
+                    out.println("</script>");
                     } else {
                         sql = "SELECT* FROM staffmembers.subjecttostaff s INNER JOIN staffmembers.user u ON "
                                 + "s.username = u.username  AND s.subjectid='" + ID + "';";
@@ -86,21 +97,33 @@ public class sendmessage extends HttpServlet {
                             String email = rs.getString("email");
                             String name = rs.getString("name");
                             statement.close();
-                            
-                            sm.Sendemail(email, subject, name, (fromusername + ": " +message) );
+                            sql = "Select * from staffmembers.user where username='" + fromusername + "';";
+                            rs = statement.executeQuery(sql);
+                            String  Name = "";
+                            if (rs.next()) {
+                                Name = rs.getString("name");
+                            }
+                            sm.Sendemail(email, subject, name, (Name + "(" +fromusername + "): " + message));
                         }
 
-                        response.sendRedirect("Messages.jsp");
+                        //response.sendRedirect("Messages.jsp");
+                        out.println("<script type=\"text/javascript\">");
+                    out.println("window.alert('Your message was sent successfully');");
+                    out.println("window.location.href=\"Messages.jsp\";");
+                    out.println("</script>");
                     }
                 } else {
-                    out.print("Inside else");
                     sql = "SELECT * FROM staffmembers.user WHERE username='" + ID + "';";
                     ResultSet rs = statement.executeQuery(sql);
                     if (!(rs.next())) {
-                        session.setAttribute("sendingconfirmationmess", "This staff not found! ");
-                        response.sendRedirect("Messages.jsp");
+                        out.println("<script type=\"text/javascript\">");
+                    out.println("window.alert('This staff member was not found!');");
+                    out.println("window.location.href=\"Messages.jsp\";");
+                    out.println("</script>");
+                        //session.setAttribute("sendingconfirmationmess", "This staff not found! ");
+                        //response.sendRedirect("Messages.jsp");
                     } else {
-                        
+
                         statement = con.createStatement();
                         sql = "SELECT * FROM staffmembers.user WHERE username='" + ID + "';";
                         rs = statement.executeQuery(sql);
@@ -109,19 +132,24 @@ public class sendmessage extends HttpServlet {
                             sql = "INSERT INTO staffmembers.message(fromusername,tousername,content) VALUES"
                                     + "('" + fromusername + "','" + rs.getString("username") + "','" + message + "');";
                             String userName = rs.getString("username");
-                            out.print(userName);
                             String email = rs.getString("email");
-                            out.print(email);
                             String name = rs.getString("name");
-                            out.print(name);
                             statement = con.createStatement();
                             statement.executeUpdate(sql);
+                            sql = "Select * from staffmembers.user where username='" + fromusername + "';";
+                            rs = statement.executeQuery(sql);
+                            String  Name = "";
+                            if (rs.next()) {
+                                Name = rs.getString("name");
+                            }
 
-                            
-                            
-                            sm.Sendemail(email, subject, name, (fromusername + ": " +message) );
+                            sm.Sendemail(email, subject, name, (Name + "(" +fromusername + "): " + message));
                         }
-                        response.sendRedirect("Messages.jsp");
+                        //response.sendRedirect("Messages.jsp");
+                        out.println("<script type=\"text/javascript\">");
+                    out.println("window.alert('Your message was sent successfully');");
+                    out.println("window.location.href=\"Messages.jsp\";");
+                    out.println("</script>");
 
                     }
                 }

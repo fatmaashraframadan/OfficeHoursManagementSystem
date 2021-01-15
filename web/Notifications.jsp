@@ -15,9 +15,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link type="text/css" rel="stylesheet" href="mycss.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Notifications - Office Hours Management</title>
+        <style>
+            .LargeNoti{
+                border-radius: 5px;
+                display: block;
+                width: 20%;
+                height: 42px;
+                margin-bottom: 25px;
+                font-size: 16px;
+                font-weight: bold;
+                color:black;
+                text-align: center;
+                background: transparent;
+                border: 1px solid;
+                cursor: pointer;
+            }
+
+            ul .noti{
+                list-style-type:circle;
+                margin: 0;
+                padding: 0;
+                width: 30%;
+
+                height: 100%;
+                overflow: auto;
+            }
+
+            li .noti-li{
+                float:none; 
+            }
+
+
+        </style>
     </head>
     <body>
         <h2 style="text-align: center; color:blue;"> Notifications </h2>
@@ -57,6 +88,6 @@
                     }%>
         </ul>
         <br>
-        <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
+        <a href="Userhome.jsp"><input class="LargeNoti" type="button" value="Back to Homepage"/></a>
     </body>
 </html>

@@ -7,8 +7,10 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Maria
  */
-@WebServlet(urlPatterns = {"/DeleteOfficeHour"})
-public class DeleteOfficeHour extends HttpServlet {
+@WebServlet(urlPatterns = {"/AddOfficeHour"})
+public class AddOfficeHour extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,7 +34,7 @@ public class DeleteOfficeHour extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -40,31 +42,18 @@ public class DeleteOfficeHour extends HttpServlet {
             Connection con = ob.Connect();
             Statement statement = con.createStatement();
             String username = request.getSession().getAttribute("session_username").toString();
-            String officehoursID = request.getParameter("myradio");
-            String sql = "SELECT * FROM staffmembers.reservation s INNER JOIN "
-                    + "staffmembers.officehours b ON s.officehoursID = b.officehoursID "
-                    + "INNER JOIN staffmembers.user c ON s.tousername = c.username "
-                    + "AND c.username='" + username + "'  INNER JOIN staffmembers.slot t "
-                    + "ON b.slotid = t.slotid AND s.officehoursID ='" + officehoursID + "';";
-            ResultSet rs = statement.executeQuery(sql);
-            if (rs.next()) {
-                String toUser = rs.getString("fromusername");
-                String fromUser = rs.getString("tousername");
-                String content = rs.getString("name") + "(" + fromUser + ") has cancelled "
-                        + "the reservation on date " + rs.getString("date") + " from ["
-                        + rs.getString("start") + " - " + rs.getString("end") + "]";
-                sql = "INSERT INTO staffmembers.notifications (toUsername, content) values ('"
-                        + toUser + "','" + content + "');";
-                statement.executeUpdate(sql);
-            }
-            sql = "Delete from staffmembers.officehours where officehoursID ='" + officehoursID + "';";
+            String location = request.getParameter("Location");
+            String status = request.getParameter("status");
+            String slotid = request.getParameter("slot");
+            
+            String sql = "Insert into staffmembers.officehours (username,location,online,slotid) values ('" + username +
+                 "','" +   location + "','" + status + "','" + slotid + "');";
             statement.executeUpdate(sql);
+            
             out.println("<script type=\"text/javascript\">");
-            out.println("window.alert('Office Hour has been deleted successfully!');");
-            out.println("window.location.href=\"OfficeHours.jsp\";");
-            out.println("</script>");
-        } catch (Exception ex) {
-            ex.printStackTrace();
+                out.println("window.alert('Office hour added successfully!');");
+                out.println("window.location.href=\"OfficeHours.jsp\";");
+                out.println("</script>");
         }
     }
 
@@ -80,7 +69,13 @@ public class DeleteOfficeHour extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AddOfficeHour.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AddOfficeHour.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -94,7 +89,13 @@ public class DeleteOfficeHour extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AddOfficeHour.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AddOfficeHour.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

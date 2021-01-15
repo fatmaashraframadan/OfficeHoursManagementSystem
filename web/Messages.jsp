@@ -113,10 +113,8 @@
 
                 
                     <td><input type="radio" name=myradio value=<%=rs.getString("fromusername")%> id="from">
-                        <%=rs.getString("fromusername")%>
-                <% toUser = rs.getString("fromusername"); 
-                System.out.println("toUser: " + toUser +"\n" + "rs.getString(\"fromusername\")" +
-                rs.getString("fromusername") ); %>
+                        <%=rs.getString("fromusername")%> </td>
+                
                 
                 <td><%=rs.getString("content")%></td>
                 <% if (type.equals("1")) {%>

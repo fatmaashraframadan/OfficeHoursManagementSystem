@@ -35,6 +35,8 @@ public class CancelAllOnThisDay extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
@@ -44,7 +46,8 @@ public class CancelAllOnThisDay extends HttpServlet {
             Connection con = ob.Connect();
             HttpSession session = request.getSession(true);
             String username = request.getSession().getAttribute("session_username").toString();
-            
+            SendEmail sm = new SendEmail();
+            String subject = "Meeting Cancelled";
 
             Statement statement = con.createStatement();
             String reservationid = request.getParameter("myradio");
@@ -54,18 +57,39 @@ public class CancelAllOnThisDay extends HttpServlet {
             ResultSet rs = statement.executeQuery(sql);
             rs.next();
             String date = rs.getString("date");
-            out.print(date);
-            out.print("<br>" + username);
             statement = con.createStatement();
             sql = "SELECT * FROM staffmembers.reservation s INNER JOIN staffmembers.officehours b ON s.officehoursID "
                     + "= b.officehoursID INNER JOIN staffmembers.user c ON s.tousername = c.username AND c.username='"
                     + username + "' INNER JOIN staffmembers.slot t ON b.slotid = t.slotid AND t.date = '" + date + "';";
             rs = statement.executeQuery(sql);
+            rs.next();
+            String content = rs.getString("name") + "(" + rs.getString("username") + ") has cancelled "
+                        + "the reservation on date " + rs.getString("date") + " from ["
+                        + rs.getString("start") + " - " + rs.getString("end") + "]";
+            ResultSet rs1 = null;
             while (rs.next()) {
-                statement = con.createStatement();
-                sql = "DELETE FROM staffmembers.reservation WHERE reservationID='" + rs.getString("reservationID") + "';";
+                sql = "INSERT INTO staffmembers.notifications (toUsername, content) values ('"
+                        + rs.getString("fromusername") + "','" + content + "');";
+                
+                String ResID = rs.getString("reservationID");
+                String fromUser = rs.getString("fromusername");
                 statement.executeUpdate(sql);
+                sql = "Select * from staffmembers.user where username='" + fromUser + "';";
+                //Statement statement1 = con.createStatement();
+                rs1 = statement.executeQuery(sql);
+                String email ="", name ="";
+                if(rs1.next()){
+                    email = rs1.getString("email");
+                    name = rs1.getString("name");
+                }
+                
+                
+                sql = "DELETE FROM staffmembers.reservation WHERE reservationID='" + ResID + "';";
+                //statement = con.createStatement();
+                statement.executeUpdate(sql);
+                sm.Sendemail(email, subject, name, content );
             }
+             
             out.println("<script type=\"text/javascript\">");
             out.println("window.alert('All meeting reservations on this day are cancelled successfully');");
             out.println("window.location.href=\"staffMeetings.jsp\";");

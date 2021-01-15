@@ -42,6 +42,8 @@ public class CancelMeeting extends HttpServlet {
             Connection con = ob.Connect();
             Statement statement = con.createStatement();
             HttpSession session = request.getSession(true);
+             SendEmail sm = new SendEmail();
+              String subject = "Meeting Cancelled";
             String reservationid = request.getParameter("myradio");
             String type = request.getSession().getAttribute("session_type").toString();
             String fromUser = request.getSession().getAttribute("session_username").toString();
@@ -61,9 +63,19 @@ public class CancelMeeting extends HttpServlet {
                 content = rs.getString("name") + "(" + fromUser + ") has cancelled "
                         + "the reservation on date " + rs.getString("date") + " from ["
                         + rs.getString("start") + " - " + rs.getString("end") + "]";
+                sql = "Select * from staffmembers.user where username='" + toUser + "';";
+                rs = statement.executeQuery(sql);
+                String email ="", name ="";
+                if(rs.next()){
+                    email = rs.getString("email");
+                    name = rs.getString("name");
+                }
                 sql = "INSERT INTO staffmembers.notifications (toUsername, content) values ('"
                         + toUser + "','" + content + "');";
                 statement.executeUpdate(sql);
+                
+                               
+                                sm.Sendemail(email, subject, name, content );
             }else{
                 sql = "SELECT * FROM staffmembers.reservation s INNER JOIN "
                         + "staffmembers.officehours b ON s.officehoursID = b.officehoursID "
@@ -79,6 +91,15 @@ public class CancelMeeting extends HttpServlet {
                 sql = "INSERT INTO staffmembers.notifications (toUsername, content) values ('"
                         + toUser + "','" + content + "');";
                 statement.executeUpdate(sql);
+                sql = "Select * from staffmembers.user where username='" + toUser + "';";
+                rs = statement.executeQuery(sql);
+                String email ="", name ="";
+                if(rs.next()){
+                    email = rs.getString("email");
+                    name = rs.getString("name");
+                }
+                 
+                 sm.Sendemail(email, subject, name, content );
             }
             sql = "DELETE FROM staffmembers.reservation WHERE reservationID='" + reservationid + "';";
             statement.executeUpdate(sql);
