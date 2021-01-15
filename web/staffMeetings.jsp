@@ -16,7 +16,9 @@
         <title>Meetings - Office Hours Management</title>
     </head>
     <body>
-
+        <header>
+            <h1> Your Meetings </h1>
+        </header>
         <%
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -40,7 +42,7 @@
                 <% while (rs.next()) {
 
                 %>
-                <option value= <%= rs.getString("officehoursID")%> > <%= rs.getString("date") + " FROM: " 
+                    <option value= <%= rs.getString("officehoursID")%> > <%= rs.getString("date") + " FROM: "
                         + rs.getString("start") + " TO: " + rs.getString("end")%> </option>
 
                 <%
@@ -96,14 +98,14 @@
             <input  class="Large"  type="submit" formaction="CancelAllOnThisDay"
                     value="Cancel all reservations on this date"style="width:290px;">
         </form>
-            <br>
-<a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
-        <% } else {
-                out.println("<script type=\"text/javascript\">");
-                out.println("window.alert('No reserved meetings to display');");
-                out.println("window.location.href=\"Userhome.jsp\";");
-                out.println("</script>");
-            }%>
+        <br>
+        <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
+            <% } else {
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("window.alert('No reserved meetings to display');");
+                    out.println("window.location.href=\"Userhome.jsp\";");
+                    out.println("</script>");
+                }%>
         <p style="color:black;">
             <%
                 out.print(confirmmessage);

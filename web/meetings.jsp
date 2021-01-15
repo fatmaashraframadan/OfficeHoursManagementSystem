@@ -33,6 +33,10 @@
                 while (rs.next()) {
                     if (counter == 1) {
         %>
+
+        <header>
+            <h1> Meetings </h1>
+        </header>
         <form action="CancelMeeting">
             <table cellspacing="5" border="0" style="height: 100%; width: 100%;"></table>
             <table border="1">
@@ -69,17 +73,17 @@
 
         </form>
         <br>
-        
-            <% } else {
-                    out.println("<script type=\"text/javascript\">");
-                    out.println("window.alert('No reserved meetings to display');");
-                    out.println("window.location.href=\"Userhome.jsp\";");
-                    out.println("</script>");
-                }%>
+
+        <% } else {
+                out.println("<script type=\"text/javascript\">");
+                out.println("window.alert('No reserved meetings to display');");
+                out.println("window.location.href=\"Userhome.jsp\";");
+                out.println("</script>");
+            }%>
 
             <p style="color:black;"><% out.print(confirmmessage);
-            session.setAttribute("cancelationconfirmationmess", " ");%></p>  
-            <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
+                session.setAttribute("cancelationconfirmationmess", " ");%></p>  
+        <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
             <%
                 } catch (Exception cnfe) {
                     System.err.println("Exception: " + cnfe);

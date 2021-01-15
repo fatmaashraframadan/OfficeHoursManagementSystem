@@ -1,6 +1,6 @@
 body{  
     background-color: #F8F8F8;
-    background-image: url(".png");
+    background-image: url("");
     background-repeat: no-repeat;
     background-size: 100%;
     margin: 0px;
@@ -15,10 +15,9 @@ header {
 }
 
 .index, .signUp, .logIn{
-    background-image: url("UV2u354mXsAXSdWOV66zdeWmqKB8gAjEqg1qrAeW7NXAN36qzjiWdUGNyArDR6p00kxQ_XIDCdgG5Y1ehE9G6_TSgSRvnYRV9l53.png");
+    background-image: url("photo-1434030216411-0b793f4b4173.jpg");
     background-repeat: no-repeat;
     background-size: 100%;
-    /*background-image:url("digital.jpg");*/
 
 }
 nav{
@@ -85,7 +84,7 @@ button:hover{
     position:absolute;
     padding: 10px;
     background-color: white;
-    opacity: 0.6;
+    opacity: 0.8;
     border-radius: 10px;
 }
 

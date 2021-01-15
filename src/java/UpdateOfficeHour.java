@@ -42,14 +42,12 @@ public class UpdateOfficeHour extends HttpServlet {
             Connection con = ob.Connect();
             Statement statement = con.createStatement();
             String username = request.getSession().getAttribute("session_username").toString();
-            
+
             String officehoursID = request.getParameter("officeHoursID");
-            String slotid = request.getParameter("slotid");
             String location = request.getParameter("location");
             String status = request.getParameter("status");
             String date = request.getParameter("date");
-            String start = request.getParameter("start");
-            String end = request.getParameter("end");
+            String slot = request.getParameter("slot");
             String dateValidation[] = date.split("/");
             boolean check = false;
             if (Integer.parseInt(dateValidation[0]) <= 31 && Integer.parseInt(dateValidation[1]) <= 12
@@ -61,19 +59,16 @@ public class UpdateOfficeHour extends HttpServlet {
                 out.println("window.location.href=\"OfficeHours.jsp\";");
                 out.println("</script>");
             }
-            if(check){
+            if (check) {
                 String sql = "Update staffmembers.officehours set location = '" + location + "' , online = '" + status
-                        + "' where officehoursID = '" + officehoursID + "';" ;
+                        + "', slotid='" + slot + "',date='" + date + "' where officehoursID = '" + officehoursID + "';";
                 statement.executeUpdate(sql);
-                sql = "Update staffmembers.slot set date = '" + date + "' , start = '" + start
-                        + "' , end = '" + end + "' where slotid = '" + slotid + "';" ;
-                statement.executeUpdate(sql);
+
                 out.println("<script type=\"text/javascript\">");
                 out.println("window.alert('Updated office hour successfully!');");
                 out.println("window.location.href=\"OfficeHours.jsp\";");
                 out.println("</script>");
             }
-            
 
         }
     }

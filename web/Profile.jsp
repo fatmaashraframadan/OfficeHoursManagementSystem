@@ -20,8 +20,8 @@
 
             if (password.toString().length >= 8 && name != "" && email != "" && phonenumber != "") {
                 var xmlhttp = new XMLHttpRequest();
-                
-                xmlhttp.onreadystatechange = function (){
+
+                xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
                         document.getElementById("show_response").innerHTML = xmlhttp.responseText;
@@ -44,7 +44,7 @@
 
         <%
             try {
-                Class.forName("com.mysql.jdbc.Driver");
+                Class.forName("com.mysql.cj.jdbc.Driver");
                 String url = "jdbc:mysql://localhost:3306/staffmembers";
                 String user = "root";
                 String pass = "root";

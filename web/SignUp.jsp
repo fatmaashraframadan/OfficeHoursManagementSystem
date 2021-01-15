@@ -72,7 +72,7 @@
     </head>
     <body class="signUp">
         <header>
-        <h1 class = "signh">SignUp</h1>
+            <h1 class = "signh">SignUp</h1>
         </header>
         <div class="signup">
             <form method = "post" id="signupform" onsubmit="return submitUserForm()" >

@@ -53,7 +53,9 @@
                 }
                 String sql = "SELECT * FROM staffmembers.message s INNER JOIN staffmembers.user c ON s.tousername = c.username AND c.username='" + username + "';";
                 ResultSet rs = statement.executeQuery(sql);%>
-
+                <header>
+                    <h1> Messages </h1>
+                </header>
         <form action="sendmessage" id="Messageform">
             <br><br>
             <label for="fname">message</label>

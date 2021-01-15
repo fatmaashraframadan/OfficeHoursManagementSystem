@@ -33,6 +33,10 @@
                     status = "Offline";
                 }
         %>
+        <header>
+            <h1> Reservations </h1>
+        </header>
+
         <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
             <tr>
                 <th>Reservation ID</th>

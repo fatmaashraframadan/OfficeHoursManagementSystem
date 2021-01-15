@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : Notifications
     Created on : Jan 12, 2021, 12:29:16 AM
@@ -17,8 +18,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Notifications - Office Hours Management</title>
-        
+
         <style>
+            body{  
+                background-color: #F8F8F8;
+                background-image: url("");
+                background-repeat: no-repeat;
+                background-size: 100%;
+                margin: 0px;
+
+            }
+
             header {
                 background-color: #F1F1F1;
                 color: blue;

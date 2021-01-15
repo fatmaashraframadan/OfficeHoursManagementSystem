@@ -42,13 +42,13 @@ public class CancelMeeting extends HttpServlet {
             Connection con = ob.Connect();
             Statement statement = con.createStatement();
             HttpSession session = request.getSession(true);
-             SendEmail sm = new SendEmail();
-              String subject = "Meeting Cancelled";
+            SendEmail sm = new SendEmail();
+            String subject = "Meeting Cancelled";
             String reservationid = request.getParameter("myradio");
             String type = request.getSession().getAttribute("session_type").toString();
             String fromUser = request.getSession().getAttribute("session_username").toString();
             String sql;
-            ResultSet rs ;
+            ResultSet rs;
             String toUser;
             String content;
             if (type.equals("1")) {
@@ -65,18 +65,17 @@ public class CancelMeeting extends HttpServlet {
                         + rs.getString("start") + " - " + rs.getString("end") + "]";
                 sql = "Select * from staffmembers.user where username='" + toUser + "';";
                 rs = statement.executeQuery(sql);
-                String email ="", name ="";
-                if(rs.next()){
+                String email = "", name = "";
+                if (rs.next()) {
                     email = rs.getString("email");
                     name = rs.getString("name");
                 }
                 sql = "INSERT INTO staffmembers.notifications (toUsername, content) values ('"
                         + toUser + "','" + content + "');";
                 statement.executeUpdate(sql);
-                
-                               
-                                sm.Sendemail(email, subject, name, content );
-            }else{
+
+                sm.Sendemail(email, subject, name, content);
+            } else {
                 sql = "SELECT * FROM staffmembers.reservation s INNER JOIN "
                         + "staffmembers.officehours b ON s.officehoursID = b.officehoursID "
                         + "INNER JOIN staffmembers.user c ON s.fromusername = c.username "
@@ -93,17 +92,17 @@ public class CancelMeeting extends HttpServlet {
                 statement.executeUpdate(sql);
                 sql = "Select * from staffmembers.user where username='" + toUser + "';";
                 rs = statement.executeQuery(sql);
-                String email ="", name ="";
-                if(rs.next()){
+                String email = "", name = "";
+                if (rs.next()) {
                     email = rs.getString("email");
                     name = rs.getString("name");
                 }
-                 
-                 sm.Sendemail(email, subject, name, content );
+
+                sm.Sendemail(email, subject, name, content);
             }
             sql = "DELETE FROM staffmembers.reservation WHERE reservationID='" + reservationid + "';";
             statement.executeUpdate(sql);
-            
+
             out.println("<script type=\"text/javascript\">");
             out.println("window.alert('Meeting reservation cancelled successfully');");
             if (type.equals("1")) {

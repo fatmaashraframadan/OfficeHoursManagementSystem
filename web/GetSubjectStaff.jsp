@@ -36,7 +36,9 @@
                 while (rs.next()) {
                     if (counter == 1) {
         %>
-
+<header>
+                    <h1> Subject Staff </h1>
+                </header>
         <form action="reservation">
             <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
                 <tr>

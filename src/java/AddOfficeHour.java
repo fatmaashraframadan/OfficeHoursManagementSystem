@@ -45,15 +45,28 @@ public class AddOfficeHour extends HttpServlet {
             String location = request.getParameter("Location");
             String status = request.getParameter("status");
             String slotid = request.getParameter("slot");
-            
-            String sql = "Insert into staffmembers.officehours (username,location,online,slotid) values ('" + username +
-                 "','" +   location + "','" + status + "','" + slotid + "');";
-            statement.executeUpdate(sql);
-            
-            out.println("<script type=\"text/javascript\">");
+            String date = request.getParameter("date");
+            String dateValidation[] = date.split("/");
+            boolean check = false;
+            if (Integer.parseInt(dateValidation[0]) <= 31 && Integer.parseInt(dateValidation[1]) <= 12
+                    && dateValidation[2].length() == 4) {
+                check = true;
+            } else {
+                out.println("<script type=\"text/javascript\">");
+                out.println("window.alert('Date entered is incorrect!! Please enter it in the following format (dd/mm/yyyy) ');");
+                out.println("window.location.href=\"OfficeHours.jsp\";");
+                out.println("</script>");
+            }
+            if (check) {
+                String sql = "Insert into staffmembers.officehours (username,location,online,slotid,date) values ('" + username
+                        + "','" + location + "','" + status + "','" + slotid + "','" + date + "');";
+                statement.executeUpdate(sql);
+
+                out.println("<script type=\"text/javascript\">");
                 out.println("window.alert('Office hour added successfully!');");
                 out.println("window.location.href=\"OfficeHours.jsp\";");
                 out.println("</script>");
+            }
         }
     }
 
