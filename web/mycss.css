@@ -2,6 +2,13 @@ body{
     background-color: #F8F8F8;
     margin: 0px;
 }
+
+.header {
+  background-color: #F1F1F1;
+  text-align: center;
+  padding: 20px;
+}
+
 .index{
     /*background-image:url("digital.jpg");*/
 
