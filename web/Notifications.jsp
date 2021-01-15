@@ -17,7 +17,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Notifications - Office Hours Management</title>
+        
         <style>
+            header {
+                background-color: #F1F1F1;
+                color: blue;
+                text-align: center;
+                padding: 20px;
+            }
+
             .LargeNoti{
                 border-radius: 5px;
                 display: block;
@@ -33,17 +41,18 @@
                 cursor: pointer;
             }
 
-            ul .noti{
+            .noti{
                 list-style-type:circle;
                 margin: 0;
                 padding: 0;
                 width: 30%;
 
+
                 height: 100%;
                 overflow: auto;
             }
 
-            li .noti-li{
+            .noti-li{
                 float:none; 
             }
 
@@ -51,7 +60,9 @@
         </style>
     </head>
     <body>
-        <h2 style="text-align: center; color:blue;"> Notifications </h2>
+        <header>
+            <h1> Notifications </h1>
+        </header>
         <%
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/staffmembers";

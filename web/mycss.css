@@ -3,10 +3,11 @@ body{
     margin: 0px;
 }
 
-.header {
-  background-color: #F1F1F1;
-  text-align: center;
-  padding: 20px;
+header {
+    background-color: #F1F1F1;
+    color: blue;
+    text-align: center;
+    padding: 20px;
 }
 
 .index{
@@ -275,6 +276,21 @@ th{
 }
 th,td{
     padding: 15px;
+}
+
+ul .noti{
+    list-style-type:circle;
+    color: blue;
+    margin: 0;
+    padding: 0;
+    width: 30%;
+
+    height: 100%;
+    overflow: auto;
+}
+
+.noti-li{
+    float:none; 
 }
 /*
 .Login , .SignUp{

@@ -71,7 +71,11 @@
             int days;
             
         %>
-        <h1 class="id">Welcome <%= rs.getString("name")%></h1>
+        
+        <header>
+            <h1 class="id">Welcome <%= rs.getString("name")%></h1>
+        </header>
+        
         <%
             if (type.equals("0")) {
                 session.setAttribute("session_tousername", null);
