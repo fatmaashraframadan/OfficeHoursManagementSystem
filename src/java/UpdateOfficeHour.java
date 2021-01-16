@@ -7,6 +7,7 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -50,7 +51,13 @@ public class UpdateOfficeHour extends HttpServlet {
             String slot = request.getParameter("slot");
             String dateValidation[] = date.split("/");
             boolean check = false;
-            if (Integer.parseInt(dateValidation[0]) <= 31 && Integer.parseInt(dateValidation[1]) <= 12
+            if (location.equals("") || date.equals("") ) {
+                     out.println("<script type=\"text/javascript\">");
+                    out.println("window.alert('All fields must be filled!');");
+                    out.println("window.location.href=\"OfficeHours.jsp\";");
+                    out.println("</script>");
+            }
+           else if (Integer.parseInt(dateValidation[0]) <= 31 && Integer.parseInt(dateValidation[1]) <= 12
                     && dateValidation[2].length() == 4) {
                 check = true;
             } else {
@@ -60,14 +67,23 @@ public class UpdateOfficeHour extends HttpServlet {
                 out.println("</script>");
             }
             if (check) {
-                String sql = "Update staffmembers.officehours set location = '" + location + "' , online = '" + status
-                        + "', slotid='" + slot + "',date='" + date + "' where officehoursID = '" + officehoursID + "';";
-                statement.executeUpdate(sql);
+                String sql = "Select * from staffmembers.officehours where slotid='" + slot + "' AND date='" + date + "' ;";
+                ResultSet rs = statement.executeQuery(sql);
+                if (!(rs.next())) {
+                    sql = "Update staffmembers.officehours set location = '" + location + "' , online = '" + status
+                            + "', slotid='" + slot + "',date='" + date + "' where officehoursID = '" + officehoursID + "';";
+                    statement.executeUpdate(sql);
 
-                out.println("<script type=\"text/javascript\">");
-                out.println("window.alert('Updated office hour successfully!');");
-                out.println("window.location.href=\"OfficeHours.jsp\";");
-                out.println("</script>");
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("window.alert('Updated office hour successfully!');");
+                    out.println("window.location.href=\"OfficeHours.jsp\";");
+                    out.println("</script>");
+                } else {
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("window.alert('You Already have office hour at this time!');");
+                    out.println("window.location.href=\"OfficeHours.jsp\";");
+                    out.println("</script>");
+                }
             }
 
         }
