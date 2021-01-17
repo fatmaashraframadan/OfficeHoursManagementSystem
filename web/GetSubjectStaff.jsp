@@ -30,38 +30,44 @@
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staffmembers", "root", "root");
                 Statement statement = con.createStatement();
                 String subjectid = request.getParameter("subjectID");
-                String sql = "SELECT* FROM staffmembers.subjecttostaff s INNER JOIN staffmembers.user d ON s.username = d.username AND s.subjectid ='" + subjectid + "';";
+                String sql = "SELECT* FROM staffmembers.subjecttostaff s INNER JOIN "
+                        + "staffmembers.user d ON s.username = d.username INNER JOIN "
+                        + "staffmembers.subject b "
+                        + "ON b.subjectid = s.subjectid "
+                        + "AND s.subjectid ='" + subjectid + "';";
                 ResultSet rs = statement.executeQuery(sql);
                 int counter = 1;
                 while (rs.next()) {
                     if (counter == 1) {
         %>
-<header>
-                    <h1> Subject Staff </h1>
-                </header>
+        <header>
+            <h1> Subject Staff </h1>
+        </header>
         <form action="reservation">
-            <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
-                <tr>
-                    <th>Subject Name</th> 
-                    <th>Staff Name</th>
-                    <th>Staff User Name</th> 
-                    <th>Email</th> 
-                    <th>Phone Number</th>  
-                </tr>
+            <div class="table">
+                <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
+                    <tr>
+                        <th>Subject Name</th> 
+                        <th>Staff Member Name</th>
+                        <th>Staff Member Username</th> 
+                        <th>Email</th> 
+                        <th>Phone Number</th>  
+                    </tr>
 
-                <%counter++;
-                    }
-                %>
-                <tr>
-                    <td><%=rs.getString("subjectid")%></td>
-                    <td><%=rs.getString("name")%></td>
-                    <td><%=rs.getString("username")%></td>
-                    <td><%=rs.getString("email")%></td>
-                    <td><%=rs.getString("phonenumber")%></td>
-                </tr>
-                <%} %>
-                <%if (counter > 1) {%>
-            </table>
+                    <%counter++;
+                        }
+                    %>
+                    <tr>
+                        <td><%=rs.getString("subjectname")%></td>
+                        <td><%=rs.getString("name")%></td>
+                        <td><%=rs.getString("username")%></td>
+                        <td><%=rs.getString("email")%></td>
+                        <td><%=rs.getString("phonenumber")%></td>
+                    </tr>
+                    <%} %>
+                    <%if (counter > 1) {%>
+                </table>
+            </div>
         </form>
         <br>
         <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>

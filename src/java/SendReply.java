@@ -7,7 +7,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -38,14 +37,14 @@ public class SendReply extends HttpServlet {
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+
             Class.forName("com.mysql.cj.jdbc.Driver");
             DataBase ob = new DataBase();
             Connection con = ob.Connect();
             Statement statement = con.createStatement();
             String from = request.getSession().getAttribute("session_username").toString();
             String to = request.getParameter("ToEmail");
-            
+
             String content = request.getParameter("message");
             String sql;
             sql = "INSERT INTO staffmembers.message(fromusername,tousername,content) VALUES"

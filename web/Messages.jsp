@@ -37,7 +37,7 @@
             }
         </script> 
     </head>
-    <body>
+    <body class="Messages">
         <%
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -53,35 +53,39 @@
                 }
                 String sql = "SELECT * FROM staffmembers.message s INNER JOIN staffmembers.user c ON s.tousername = c.username AND c.username='" + username + "';";
                 ResultSet rs = statement.executeQuery(sql);%>
-                <header>
-                    <h1> Messages </h1>
-                </header>
-        <form action="sendmessage" id="Messageform">
-            <br><br>
-            <label for="fname">message</label>
-            <textarea class="lab" id="message" name="message" placeholder="write you message" 
-                      rows="10" cols="30"></textarea>
+        <header>
+            <h1> Messages </h1>
+        </header>
+        <div class="SendMessage">
+            <form action="sendmessage" id="Messageform">
+                <div class="table">
+                    <label for="fname">Message</label>
+                    <br>
+                    <textarea class="lab" id="message" name="message" placeholder="write you message" 
+                              rows="20" cols="50"></textarea>
+                    <br>
+                    <input class="lab"type= "text" id="tousername" name="tousername" placeholder="write Staff or subject ID "/>
 
-            <td><input class="lab"type= "text" id="tousername" name="tousername" placeholder="write Staff or subject ID "/></td>
-
-            <label for="cars">To:</label>
-            <select id="To" name="To" >
-                <option value="All">All staff of subject</option>
-                <%
-                    if (type.equals("0")) {
-                %>
-                <option value="TA"> Specific TA </option>   
-                <%
-                } else if (type.equals("1")) {
-                %>
-                <option value="TA">Specific TA / Student</option> 
-                <%}%>
-            </select>
-            <input type="submit" value="send" class="update">
-        </form>
+                    <label for="cars">To:</label>
+                    <select id="To" name="To" >
+                        <option value="All">All staff of subject</option>
+                        <%
+                            if (type.equals("0")) {
+                        %>
+                        <option value="TA"> Specific TA </option>   
+                        <%
+                        } else if (type.equals("1")) {
+                        %>
+                        <option value="TA">Specific TA / Student</option> 
+                        <%}%>
+                    </select>
+                    <input type="submit" value="send" class="update">
+                </div>
+            </form>
+        </div>
         <br>
             <p style="color:black;"><% out.print(confirmmessage);
-            session.setAttribute("sendingconfirmationmess", " ");%></p>  
+                session.setAttribute("sendingconfirmationmess", " ");%></p>  
         <br>
         <% int counter = 1;
             String toUser = "";
@@ -90,60 +94,55 @@
                 if (counter == 1) {
         %>
         <div id="show_response">
-
-
-            
             <form>
-                
-            <!-- <table cellspacing="5" border="0"></table> -->
-            <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
-                <tr>
+                <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
+                    <tr>
 
-                    <th> From </th>  
-                    <th>Content</th> 
+                        <th> From </th>  
+                        <th>Content</th> 
+                            <% if (type.equals("1")) {%>
+                        <th>       </th>
+                            <%}
+                            %>
+                    </tr>
+
+                    <%counter++;
+                        }
+
+                    %>
+                    <tr>
+
+
+                        <td><input type="radio" name=myradio value=<%=rs.getString("fromusername")%> id="from">
+                            <%=rs.getString("fromusername")%> </td>
+
+
+                        <td><%=rs.getString("content")%></td>
                         <% if (type.equals("1")) {%>
-                    <th>       </th>
-                        <%}
-                        %>
-                </tr>
+                        <td>
 
-                <%counter++;
-                    }
-                    
-                %>
-                <tr>
 
-                
-                    <td><input type="radio" name=myradio value=<%=rs.getString("fromusername")%> id="from">
-                        <%=rs.getString("fromusername")%> </td>
-                
-                
-                <td><%=rs.getString("content")%></td>
-                <% if (type.equals("1")) {%>
-                <td>
-                  
-                    
-                 <!-- <input type="button" id="replyButton" value="Reply" onclick="sendajax()" />-->
-                 <input  type="submit"  value="Reply" 
-                            formaction="Reply.jsp"/> 
-                       
-                </td>
+                            <!-- <input type="button" id="replyButton" value="Reply" onclick="sendajax()" />-->
+                            <input  type="submit"  value="Reply" 
+                                    formaction="Reply.jsp"/> 
 
-                </tr>
-                <%}
+                        </td>
+
+                    </tr>
+                    <%}
                     }%>
-                <%if (counter > 1) {%>
-            </table>
- </form>
+                    <%if (counter > 1) {%>
+                </table>
+            </form>
 
-<br>
-        <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
+            <br>
+            <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
         </div>
-        
-            <% }
-                } catch (Exception cnfe) {
-                    System.err.println("Exception: " + cnfe);
-                }
-            %>
+
+        <% }
+            } catch (Exception cnfe) {
+                System.err.println("Exception: " + cnfe);
+            }
+        %>
     </body>
 </html>

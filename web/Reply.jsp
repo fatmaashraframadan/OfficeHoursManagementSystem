@@ -26,7 +26,7 @@
             <textarea id="message" name="message" 
                       placeholder="write you message " 
                       rows="10" cols="30"></textarea>
-            <br > <br  >
+            <br>
             <input type="submit" formaction="SendReply" value="Reply"/> 
 
 

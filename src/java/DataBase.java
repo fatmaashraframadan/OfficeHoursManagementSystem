@@ -25,7 +25,7 @@ public class DataBase {
     }
 
     Connection Connect() {
-    
+
         Connection con = null;
         try {
             con = DriverManager.getConnection(this.url, this.user, this.pass);

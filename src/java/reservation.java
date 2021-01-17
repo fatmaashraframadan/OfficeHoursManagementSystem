@@ -66,37 +66,34 @@ public class reservation extends HttpServlet {
                         + "staffmembers.officehours b INNER JOIN staffmembers.slot t ON t.slotid = b.slotid "
                         + " AND b.officehoursID ='" + radio + "' INNER JOIN staffmembers.user c ON c.username = b.username;";
                 rs = statement.executeQuery(sql);
-               rs.next();
+                rs.next();
                 String content = fromName + "(" + fromusernamer + ") has reserved "
                         + "the office hour on date " + rs.getString("date") + " from ["
                         + rs.getString("start") + " - " + rs.getString("end") + "]";
-                
-                
+
                 //A student has reserved a meeting
                 statement = con.createStatement();
                 sql = "INSERT INTO staffmembers.notifications (toUsername, content) values ('"
                         + tousername + "','" + content + "');";
                 statement.executeUpdate(sql);
                 sql = "Select * from staffmembers.user where username='" + tousername + "';";
-                 ResultSet rs1 = statement.executeQuery(sql);
-                String email ="", name ="";
-                if(rs1.next()){
+                ResultSet rs1 = statement.executeQuery(sql);
+                String email = "", name = "";
+                if (rs1.next()) {
                     email = rs1.getString("email");
                     name = rs1.getString("name");
                 }
-                sm.Sendemail(email, subject, name, content );
-                
-                
+                sm.Sendemail(email, subject, name, content);
+
                 //Notification on day of the meeting(to student)
-                content = "You have a meeting today with " + 
-                        rs.getString("name") + "(" + tousername + ")" + " from ["
+                content = "You have a meeting today with "
+                        + rs.getString("name") + "(" + tousername + ")" + " from ["
                         + rs.getString("start") + " - " + rs.getString("end") + "]";
                 statement = con.createStatement();
                 sql = "INSERT INTO staffmembers.notifications (toUsername, content, date) values ('"
-                        + fromusernamer + "','" + content + "','"+ rs.getString("date") + "');";
+                        + fromusernamer + "','" + content + "','" + rs.getString("date") + "');";
                 statement.executeUpdate(sql);
-                
-                
+
                 //Notification on day of the meeting(to staff member)
                 content = "You have a meeting today with " + fromName + "(" + fromusernamer + ") "
                         + " from [" + rs.getString("start") + " - " + rs.getString("end") + "]";

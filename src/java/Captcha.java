@@ -9,8 +9,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -60,7 +58,7 @@ public class Captcha extends HttpServlet {
         }
 
         g2dImage.setFont(style1);
-        
+
         for (int i = 0; i < iTotalChar; i++) {
             g2dImage.setColor(new Color(randchar.nextInt(225), randchar.nextInt(225), randchar.nextInt(225)));
             if (i % 2 == 0) {
@@ -75,7 +73,7 @@ public class Captcha extends HttpServlet {
 
         g2dImage.dispose();
         HttpSession s = request.getSession();
-        s.setAttribute("captcha",sImageCode);
+        s.setAttribute("captcha", sImageCode);
 
     }
 

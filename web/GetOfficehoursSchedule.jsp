@@ -57,47 +57,52 @@
                     if (counter == 1) {
  
         %>
+        <header>
+            <h1> Office Hours </h1>
+        </header>
         <form action="reservation">
-        <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
-            <tr>
-                <th>Date</th> 
-                <th>status</th> 
-                <th>start</th> 
-                <th>end</th> 
-                <th>location</th> 
-            </tr>
+            <div class="table">
+                <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
+                    <tr>
+                        <th>Date</th> 
+                        <th>status</th> 
+                        <th>start</th> 
+                        <th>end</th> 
+                        <th>location</th> 
+                    </tr>
 
-            <%counter++;
-                }
-            %>
-            <tr>
-                <td><input type="radio" name="myradio" id ="myradio" value=<%=rs.getString("officehoursID")%>>
-                    <%=rs.getString("date")%>
-                    <% if(rs.getString("online").equals("1")){%>
-                <td >online</td><%}else{%>
-                 <td>offline</td><%}%>
-                <td><%=rs.getString("start")%></td>
-                <td><%=rs.getString("end")%></td>
-                <td><%=rs.getString("location")%></td>
-            </tr>
-            <%} %>
-     <%if (counter > 1) {%>
-            </table>
+                    <%counter++;
+                        }
+                    %>
+                    <tr>
+                        <td><input type="radio" name="myradio" id ="myradio" value=<%=rs.getString("officehoursID")%>>
+                            <%=rs.getString("date")%>
+                            <% if(rs.getString("online").equals("1")){%>
+                        <td >online</td><%}else{%>
+                        <td>offline</td><%}%>
+                        <td><%=rs.getString("start")%></td>
+                        <td><%=rs.getString("end")%></td>
+                        <td><%=rs.getString("location")%></td>
+                    </tr>
+                    <%} %>
+                    <%if (counter > 1) {%>
+                </table>
+            </div>
             <br>
-              <input type="submit" value="reserve" class="update">
+            <input type="submit" value="reserve" class="update">
         </form>
-         
+
         <% }%>
         <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
-           
-                <p style="color:black;"><% out.print(confirmmessage);
-                session.setAttribute("reservationconfirmationmess", " ");%></p>   
-        
 
-                       <%
-                } catch (Exception cnfe) {
-                    System.err.println("Exception: " + cnfe);
-                }
-%>
+        <p style="color:black;"><% out.print(confirmmessage);
+                session.setAttribute("reservationconfirmationmess", " ");%></p>   
+
+
+        <%
+ } catch (Exception cnfe) {
+     System.err.println("Exception: " + cnfe);
+ }
+        %>
     </body>
 </html>

@@ -7,11 +7,9 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -68,7 +66,7 @@ public class SignUpValidation extends HttpServlet {
                 String code = sm.getRandom();
                 String subject = "Email Verification";
                 String content = "\n Thanks for joining our Web Application! "
-                    + "Please Login with this password " + code;
+                        + "Please Login with this password " + code;
                 boolean sended = sm.Sendemail(UserEmail, subject, Name, content);
                 if (sended) {
                     //  session.setAttribute("session-authcode", code);

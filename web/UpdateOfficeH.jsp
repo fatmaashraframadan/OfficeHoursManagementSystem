@@ -44,38 +44,40 @@
             <h1> Update office Hour </h1>
         </header>
         <form>
-            <table>       
-                <input type="hidden"  name="officeHoursID" id="officeHoursID" value=<%= Oid%>>
-                <input type="hidden"  name="slotid" id="slotid" value=<%= SID%> >
-                <td><%=Oid%></td>
+            <div class="table">
+                <table>       
+                    <input type="hidden"  name="officeHoursID" id="officeHoursID" value=<%= Oid%>>
+                    <input type="hidden"  name="slotid" id="slotid" value=<%= SID%> >
+                    <td><%=Oid%></td>
 
-                <td><input name="location" type="text" value=<%= rs.getString("location")%>></td> 
+                    <td><input name="location" type="text" value=<%= rs.getString("location")%>></td> 
 
-                <td>
-                    <select id="status" name="status" >
-                        <%
-                            if (status.equals("Online")) {
-                        %>
-                        <option value="1">Online</option> 
-                        <option value="0">Offline</option>
-                        <% } else {%>
-                        <option value="0">Offline</option>
-                        <option value="1">Online</option>
-                        <% }%>
-                    </select>
-                </td>
-                <td><input name="date" id="date" type="text" value=<%= rs.getString("date")%>></td>
-                    <%  sql = "Select * from staffmembers.slot;";
+                    <td>
+                        <select id="status" name="status" >
+                            <%
+                                if (status.equals("Online")) {
+                            %>
+                            <option value="1">Online</option> 
+                            <option value="0">Offline</option>
+                            <% } else {%>
+                            <option value="0">Offline</option>
+                            <option value="1">Online</option>
+                            <% }%>
+                        </select>
+                    </td>
+                    <td><input name="date" id="date" type="text" value=<%= rs.getString("date")%>></td>
+                        <%  sql = "Select * from staffmembers.slot;";
                 rs = statement.executeQuery(sql);%>
-                <td>
-                    <select id="slot" name="slot" >
+                    <td>
+                        <select id="slot" name="slot" >
                             <% while (rs.next()) {%>
                             <option value="<%= rs.getString("slotid")%>"> <%=(rs.getString("start") + " " + rs.getString("end"))%> </option> 
                             <% } %>
-                    </select> 
-                </td>
-                <%}%>
-            </table>
+                        </select> 
+                    </td>
+                    <%}%>
+                </table>
+            </div>
             <input type="submit" value="Update" formaction="UpdateOfficeHour">
         </form>
     </body>

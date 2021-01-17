@@ -22,16 +22,16 @@
         <style>
             body{  
                 background-color: #F8F8F8;
-                background-image: url("");
+                background-image: url("d2b5ddc050e7b5708bc9f17d8209b083.jpg");
                 background-repeat: no-repeat;
                 background-size: 100%;
-                margin: 0px;
+                background-attachment:fixed;
+                margin: 5px;
 
             }
 
             header {
-                background-color: #F1F1F1;
-                color: blue;
+
                 text-align: center;
                 padding: 20px;
             }
@@ -42,6 +42,7 @@
                 width: 20%;
                 height: 42px;
                 margin-bottom: 25px;
+                margin-left: 30%;
                 font-size: 16px;
                 font-weight: bold;
                 color:black;
@@ -51,22 +52,16 @@
                 cursor: pointer;
             }
 
-            .noti{
+            ul .noti{
                 list-style-type:circle;
-                margin: 0;
-                padding: 0;
-                width: 30%;
-
-
-                height: 100%;
+                margin: 20px;
+                padding: 5px;
                 overflow: auto;
             }
 
-            .noti-li{
+            li .noti-li{
                 float:none; 
             }
-
-
         </style>
     </head>
     <body>
@@ -94,20 +89,21 @@
             int days;
 
         %>
-
-        <ul class="noti">
-            <% while (rs.next()) {
-                    if (!(rs.getString("date") == null)) {
-                        dateofT = formater.parse(rs.getString("date"));
-                        days = (int) ((todays.getTime() - dateofT.getTime()) / (1000 * 60 * 60 * 24));
-                        if (days == 0) {%>             
-            <li class="noti-li"> <%= rs.getString("content")%> </li>
-                <% }
+        <div class="notifications">
+            <ul class="noti">
+                <% while (rs.next()) {
+                        if (!(rs.getString("date") == null)) {
+                            dateofT = formater.parse(rs.getString("date"));
+                            days = (int) ((todays.getTime() - dateofT.getTime()) / (1000 * 60 * 60 * 24));
+                            if (days == 0) {%>             
+                <li class="noti-li"> <%= rs.getString("content")%> </li>
+                    <% }
                 } else {%>
-            <li class="noti-li"> <%= rs.getString("content")%> </li>
-                <%}
+                <li class="noti-li"> <%= rs.getString("content")%> </li>
+                    <%}
                     }%>
-        </ul>
+            </ul>
+        </div>
         <br>
         <a href="Userhome.jsp"><input class="LargeNoti" type="button" value="Back to Homepage"/></a>
     </body>

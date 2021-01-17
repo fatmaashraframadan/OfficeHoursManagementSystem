@@ -3,11 +3,9 @@ import java.util.Properties;
 import java.util.Random;
 import javax.mail.Authenticator;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -24,7 +22,7 @@ public class SendEmail {
 
     public String getRandom() {
         Random rand = new Random();
-int number = rand.nextInt(99999999);
+        int number = rand.nextInt(99999999);
         return String.format("%08d", number);
     }
 

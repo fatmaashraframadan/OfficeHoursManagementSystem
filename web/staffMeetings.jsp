@@ -43,7 +43,7 @@
 
                 %>
                     <option value= <%= rs.getString("officehoursID")%> > <%= rs.getString("date") + " FROM: "
-                        + rs.getString("start") + " TO: " + rs.getString("end")%> </option>
+                            + rs.getString("start") + " TO: " + rs.getString("end")%> </option>
 
                 <%
                     }
@@ -62,43 +62,43 @@
                 if (counter == 1) {
         %>
         <form action="CancelMeeting">
-            <table cellspacing="5" border="0" style="height: 100%; width: 100%;"></table>
-            <table border="1">
-                <tr>
-                    <th>Meeting ID</th> 
-                    <th> username</th>  
-                    <th>From</th> 
-                    <th>To</th>
-                    <th>Date</th>
-                    <th>Location</th>
-                    <th>Status</th>
-                </tr>
+            <div class="table">
+                <table cellspacing="5" border="0" style="height: 100%; width: 100%;"></table>
+                <table border="1">
+                    <tr>
+                        <th>Meeting ID</th> 
+                        <th> username</th>  
+                        <th>From</th> 
+                        <th>To</th>
+                        <th>Date</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                    </tr>
 
-                <%counter++;
-                    }
-                %>
-                <tr>
-                    <td><input type="radio" name=myradio value=<%=rs.getString("reservationID")%>>
-                        <%=rs.getString("reservationID")%>
-                    <td><%=rs.getString("fromusername")%></td>
-                    <td><%=rs.getString("start")%></td>
-                    <td><%=rs.getString("end")%></td>
-                    <td><%=rs.getString("date")%></td>
-                    <td><%=rs.getString("location")%>
-                    </td>  <% if (rs.getString("online").equals("1")) {%>
-                    <td >online</td><%} else {%>
-                    <td>offline</td><%}%>
-                </tr>
-                <%} %>
-                <%if (counter > 1) {%>
-            </table>
+                    <%counter++;
+                        }
+                    %>
+                    <tr>
+                        <td><input type="radio" name=myradio value=<%=rs.getString("reservationID")%>>
+                            <%=rs.getString("reservationID")%>
+                        <td><%=rs.getString("fromusername")%></td>
+                        <td><%=rs.getString("start")%></td>
+                        <td><%=rs.getString("end")%></td>
+                        <td><%=rs.getString("date")%></td>
+                        <td><%=rs.getString("location")%>
+                        </td>  <% if (rs.getString("online").equals("1")) {%>
+                        <td >online</td><%} else {%>
+                        <td>offline</td><%}%>
+                    </tr>
+                    <%} %>
+                    <%if (counter > 1) {%>
+                </table>
+            </div>
             <br>
-            <input  class = "getcon" type="submit" value="Cancel" class="update">
-            <br> 
+            <input  class = "getcon" type="submit" value="Cancel" class="update"> 
             <input  class="Large"  type="submit" formaction="CancelAllOnThisDay"
                     value="Cancel all reservations on this date"style="width:290px;">
         </form>
-        <br>
         <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
             <% } else {
                     out.println("<script type=\"text/javascript\">");

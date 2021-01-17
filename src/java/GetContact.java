@@ -41,33 +41,33 @@ public class GetContact extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             Class.forName("com.mysql.cj.jdbc.Driver");
             //Class.forName("com.mysql.jdbc.Driver");
-      
+
             DataBase ob = new DataBase();
             Connection con = ob.Connect();
-            
+
             String username = request.getParameter("username");
-           String type = request.getSession().getAttribute("session_type").toString();
-     
+            String type = request.getSession().getAttribute("session_type").toString();
+
             Statement statement = con.createStatement();
-            
+
             String sql = "SELECT* FROM staffmembers.user";
-        
+
             ResultSet rs = statement.executeQuery(sql);
             Boolean found = false;
-            while(rs.next()){
-                if(rs.getString("username").equals(username)){
-                    found=true;
+            while (rs.next()) {
+                if (rs.getString("username").equals(username)) {
+                    found = true;
                     out.print(rs.getString("email"));
                     if (type.equals("1")) {
                         out.print("<br>");
                         out.print(rs.getString("phonenumber"));
                     }
                 }
-            }if(!found){
+            }
+            if (!found) {
                 out.print("This member not found!");
             }
-            
-            
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(GetContact.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

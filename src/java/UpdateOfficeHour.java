@@ -51,13 +51,12 @@ public class UpdateOfficeHour extends HttpServlet {
             String slot = request.getParameter("slot");
             String dateValidation[] = date.split("/");
             boolean check = false;
-            if (location.equals("") || date.equals("") ) {
-                     out.println("<script type=\"text/javascript\">");
-                    out.println("window.alert('All fields must be filled!');");
-                    out.println("window.location.href=\"OfficeHours.jsp\";");
-                    out.println("</script>");
-            }
-           else if (Integer.parseInt(dateValidation[0]) <= 31 && Integer.parseInt(dateValidation[1]) <= 12
+            if (location.equals("") || date.equals("")) {
+                out.println("<script type=\"text/javascript\">");
+                out.println("window.alert('All fields must be filled!');");
+                out.println("window.location.href=\"OfficeHours.jsp\";");
+                out.println("</script>");
+            } else if (Integer.parseInt(dateValidation[0]) <= 31 && Integer.parseInt(dateValidation[1]) <= 12
                     && dateValidation[2].length() == 4) {
                 check = true;
             } else {

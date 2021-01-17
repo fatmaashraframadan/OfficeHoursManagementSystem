@@ -1,19 +1,58 @@
 body{  
-    background-color: #F8F8F8;
-    background-image: url("");
+
+    background-image: url("d2b5ddc050e7b5708bc9f17d8209b083.jpg");
     background-repeat: no-repeat;
     background-size: 100%;
-    margin: 0px;
-    
-}
+    background-attachment:fixed;
+    margin: 10px;
 
-header {
-    
+}
+.SendMessage{
+    float:left;
+    width: 500px;
+    height: 250px;
+
+}
+.table{
+    margin: 20px;
+}
+.notifications{
+    float:none;
+    width: 800px;
+}
+/*.Messageform{
+    width: 250px;
+    height: 300px;
+}*/
+header {    
     color: black;
     text-align: center;
     padding: 20px;
+    font-family: sans-serif;
 }
 
+.addOffice{
+    float:none;
+    width: 750px;
+    height: 200px;
+}
+
+footer{
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+    background-color: beige;
+    padding: 15px;
+}
+
+.show_response{
+    margin: 10px;
+    float:none;
+    width: 200px;
+    height: 250px;
+}
 .index, .signUp, .logIn{
     background-image: url("photo-1434030216411-0b793f4b4173.jpg");
     background-repeat: no-repeat;
@@ -146,6 +185,13 @@ button:hover{
     cursor: pointer;
 }
 
+.getcon{
+    display: inline-block;
+    margin-top: 5px;
+    width:120px;
+
+}
+
 .register-button:hover , .update:hover , .getcon:hover, .Large:hover{
     background-color: black; /* Green */
     color: white;
@@ -196,10 +242,10 @@ button:hover{
     background-color: transparent;
     color: black;
     text-decoration: none;
-    
+
     position: relative;
-    
-    
+
+
 }
 
 .notification .badge {
@@ -248,10 +294,7 @@ li a:hover:not(.active) {
     color: white;
 }
 
-.getcon{
-    margin-top: 5px;
-    width:120px;
-}
+
 
 .id{
     text-align: center;
@@ -264,10 +307,7 @@ li a:hover:not(.active) {
 }
 
 
-.Messageform{
-    width: 100%;
-    height: 100%;
-}
+
 
 table, th, td {
     border: 1px solid black;
@@ -286,12 +326,9 @@ th,td{
 
 ul .noti{
     list-style-type:circle;
-    color: blue;
     margin: 0;
     padding: 0;
-    width: 30%;
 
-    height: 100%;
     overflow: auto;
 }
 

@@ -71,30 +71,32 @@
         <div class = "profile">
             <h1>User ID : <%=username%></h1>
             <form class="Login" >
-                <table class="tab1">
-                    <tr>
-                        <td><label >Name:                </label></td>
-                        <td><input class="lab"type= "text" id="name" name="name" value="<%=name%>"/></td>
+                <div class="table">
+                    <table class="tab1">
+                        <tr>
+                            <td><label >Name:                </label></td>
+                            <td><input class="lab"type= "text" id="name" name="name" value="<%=name%>"/></td>
 
-                    </tr>
-                    <tr>
-                        <td> <label >Password:            </label></td>
-                        <td><input class="lab"type= "text" id="password" name="password" value="<%=password%>"/></td>
+                        </tr>
+                        <tr>
+                            <td> <label >Password:            </label></td>
+                            <td><input class="lab"type= "text" id="password" name="password" value="<%=password%>"/></td>
 
-                    </tr>
+                        </tr>
 
-                    <tr>
-                        <td> <label >Phone Number:        </label></td>
-                        <td><input class="lab"type= "text" id="phonenumber" name="phonenumber" value="<%=phonenumber%>"/></td>
+                        <tr>
+                            <td> <label >Phone Number:        </label></td>
+                            <td><input class="lab"type= "text" id="phonenumber" name="phonenumber" value="<%=phonenumber%>"/></td>
 
-                    </tr>
+                        </tr>
 
-                    <tr>
-                        <td><label >Email Address:       </label></td>
-                        <td><input class="lab"type= "text" id="email" name="email" value="<%=Email%>"/></td>     
-                    </tr>
+                        <tr>
+                            <td><label >Email Address:       </label></td>
+                            <td><input class="lab"type= "text" id="email" name="email" value="<%=Email%>"/></td>     
+                        </tr>
 
-                </table>
+                    </table>
+                </div>
                 <input type="button" value="Save Update" onclick="sendajax()" class="update">
                 <div id="show_response">  </div>
             </form> 

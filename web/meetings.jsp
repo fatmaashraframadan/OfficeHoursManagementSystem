@@ -38,8 +38,8 @@
             <h1> Meetings </h1>
         </header>
         <form action="CancelMeeting">
-            <table cellspacing="5" border="0" style="height: 100%; width: 100%;"></table>
-            <table border="1">
+            <div class="table">
+            <table cellspacing="5" border="1" style="height: 100%; width: 100%;">
                 <tr>
                     <th>Meeting ID</th> 
                     <th> username</th>  
@@ -68,6 +68,7 @@
                 <%} %>
                 <%if (counter > 1) {%>
             </table>
+            </div>
             <br>
             <input  class = "getcon" type="submit" value="Cancel" class="update">
 

@@ -7,10 +7,8 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -71,20 +69,19 @@ public class LoginValidation extends HttpServlet {
                     response.sendRedirect("Userhome.jsp");
 
                     check = true;
-                    
-                    
+
                     statement = con.createStatement();
                     sql = " Select * from staffmembers.notifications where toUsername = '"
                             + rs.getString("username") + "';";
                     rs = statement.executeQuery(sql);
                     int counter = 0;
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String today = sdf.format(new Date()).toString();
-            SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
-            Date todays = formater.parse(today);
-            Date dateofT;
-            int days;
-            SendEmail sm = new SendEmail();
+                    String today = sdf.format(new Date()).toString();
+                    SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+                    Date todays = formater.parse(today);
+                    Date dateofT;
+                    int days;
+                    SendEmail sm = new SendEmail();
                     while (rs.next()) {
                         if (!(rs.getString("date") == null)) {
                             dateofT = formater.parse(rs.getString("date"));
@@ -92,10 +89,10 @@ public class LoginValidation extends HttpServlet {
                             if (days == 0) {
                                 String Content = rs.getString("content");
                                 String subject = "Meeting due Today";
-                                sm.Sendemail(Email, subject, name, Content );
-                                
+                                sm.Sendemail(Email, subject, name, Content);
+
                             }
-                        } 
+                        }
                     }
                 }
 
