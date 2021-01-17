@@ -29,20 +29,22 @@
                 if (request.getSession().getAttribute("cancelationconfirmationmess") != null) {
                     confirmmessage = request.getSession().getAttribute("cancelationconfirmationmess").toString();
                 }
-                String sql = "SELECT * FROM staffmembers.officehours b INNER JOIN staffmembers.slot s ON s.slotid = b.slotid "
-                        + "INNER JOIN staffmembers.user c ON  c.username = b.username AND c.username='" + username + "';";
+                String sql = "SELECT * FROM staffmembers.slot ;";
                 ResultSet rs = statement.executeQuery(sql);
 
         %>
         <form action="viewReservations.jsp">
+            <td><input type="text" name=date placeholder="write office hour date : ">
             <br>
             <label> Select office hour slot: </label>
             <select id="slot" name="slot" >
 
                 <% while (rs.next()) {
-
+                            
                 %>
-                    <option value= <%= rs.getString("officehoursID")%> > <%= rs.getString("date") + " FROM: "
+                
+                   
+                    <option value= <%= rs.getString("slotid")%> > <%=" FROM: "
                             + rs.getString("start") + " TO: " + rs.getString("end")%> </option>
 
                 <%
