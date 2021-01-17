@@ -60,7 +60,7 @@ public class CancelAllOnThisDay extends HttpServlet {
             statement = con.createStatement();
             sql = "SELECT * FROM staffmembers.reservation s INNER JOIN staffmembers.officehours b ON s.officehoursID "
                     + "= b.officehoursID INNER JOIN staffmembers.user c ON s.tousername = c.username AND c.username='"
-                    + username + "' INNER JOIN staffmembers.slot t ON b.slotid = t.slotid AND t.date = '" + date + "';";
+                    + username + "' INNER JOIN staffmembers.slot t ON b.slotid = t.slotid AND b.date = '" + date + "';";
             rs = statement.executeQuery(sql);
 
             String content = "";
