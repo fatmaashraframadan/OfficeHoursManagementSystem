@@ -27,7 +27,7 @@
               String dateValidation[] = date.split("/");
             boolean check = false;
         
-             if (Integer.parseInt(dateValidation[0]) <= 31 && Integer.parseInt(dateValidation[1]) <= 12
+             if (dateValidation.length == 3 && Integer.parseInt(dateValidation[0]) <= 31 && Integer.parseInt(dateValidation[1]) <= 12
                     && dateValidation[2].length() == 4) {
                 
                 check = true;

@@ -51,7 +51,8 @@
                     confirmmessage = request.getSession().getAttribute("sendingconfirmationmess").toString();
 
                 }
-                String sql = "SELECT * FROM staffmembers.message s INNER JOIN staffmembers.user c ON s.tousername = c.username AND c.username='" + username + "';";
+                String sql = "SELECT * FROM staffmembers.message s INNER JOIN staffmembers.user"
+                        + " c ON s.tousername = c.username AND c.username='" + username + "';";
                 ResultSet rs = statement.executeQuery(sql);%>
         <header>
             <h1> Messages </h1>

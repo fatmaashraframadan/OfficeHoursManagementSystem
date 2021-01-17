@@ -55,7 +55,7 @@ public class AddOfficeHour extends HttpServlet {
                     out.println("window.location.href=\"OfficeHours.jsp\";");
                     out.println("</script>");
             }
-            else if (Integer.parseInt(dateValidation[0]) <= 31 && Integer.parseInt(dateValidation[1]) <= 12
+            else if (dateValidation.length == 3 && Integer.parseInt(dateValidation[0]) <= 31 && Integer.parseInt(dateValidation[1]) <= 12
                     && dateValidation[2].length() == 4) {
                 
                 check = true;

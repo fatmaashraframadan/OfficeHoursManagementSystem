@@ -32,30 +32,31 @@
                 String confirmmessage = " ";
                 if (request.getSession().getAttribute("reservationconfirmationmess") != null) {
                     confirmmessage = request.getSession().getAttribute("reservationconfirmationmess").toString();
-                
+
                 }
                 String staffusername;
-                 String sql ;
-                if(request.getSession().getAttribute("session_tousername") == null){
+                String sql;
+                if (request.getSession().getAttribute("session_tousername") == null) {
                     staffusername = request.getParameter("username");
-                     sql = "SELECT * FROM staffmembers.officehours WHERE username='"+staffusername+"';";
-                      ResultSet rs = statement.executeQuery(sql);
-                      if(!(rs.next())){
-                          session.setAttribute("checkstaffFound", "This user Not Found !");
-                          response.sendRedirect("Userhome.jsp");
-                      }
-                      else
-                       session.setAttribute("session_tousername", staffusername);
-                         }
-                staffusername= request.getSession().getAttribute("session_tousername").toString();
-                 sql = "SELECT * FROM staffmembers.officehours s INNER JOIN staffmembers.slot d "
-                         + "ON s.slotid = d.slotid AND s.username ='" + staffusername + "';";
+                    sql = "SELECT * FROM staffmembers.officehours WHERE username='" + staffusername
+                            + "';";
+                    ResultSet rs = statement.executeQuery(sql);
+                    if (!(rs.next())) {
+                        session.setAttribute("checkstaffFound", "This user Not Found !");
+                        response.sendRedirect("Userhome.jsp");
+                    } else {
+                        session.setAttribute("session_tousername", staffusername);
+                    }
+                }
+                staffusername = request.getSession().getAttribute("session_tousername").toString();
+                sql = "SELECT * FROM staffmembers.officehours s INNER JOIN staffmembers.slot d "
+                        + "ON s.slotid = d.slotid AND s.username ='" + staffusername + "';";
                 ResultSet rs = statement.executeQuery(sql);
-                int counter = 1; 
-                
+                int counter = 1;
+
                 while (rs.next()) {
                     if (counter == 1) {
- 
+
         %>
         <header>
             <h1> Office Hours </h1>
@@ -77,8 +78,8 @@
                     <tr>
                         <td><input type="radio" name="myradio" id ="myradio" value=<%=rs.getString("officehoursID")%>>
                             <%=rs.getString("date")%>
-                            <% if(rs.getString("online").equals("1")){%>
-                        <td >online</td><%}else{%>
+                            <% if (rs.getString("online").equals("1")) {%>
+                        <td >online</td><%} else {%>
                         <td>offline</td><%}%>
                         <td><%=rs.getString("start")%></td>
                         <td><%=rs.getString("end")%></td>
@@ -95,14 +96,14 @@
         <% }%>
         <a href="Userhome.jsp"><input class="Large" type="button" value="Back to Homepage"/></a>
 
-        <p style="color:black;"><% out.print(confirmmessage);
-                session.setAttribute("reservationconfirmationmess", " ");%></p>   
+            <p style="color:black;"><% out.print(confirmmessage);
+            session.setAttribute("reservationconfirmationmess", " ");%></p>   
 
 
         <%
- } catch (Exception cnfe) {
-     System.err.println("Exception: " + cnfe);
- }
+            } catch (Exception cnfe) {
+                System.err.println("Exception: " + cnfe);
+            }
         %>
     </body>
 </html>
