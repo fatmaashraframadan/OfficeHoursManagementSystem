@@ -22,8 +22,24 @@
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staffmembers", "root", "root");
             Statement statement = con.createStatement();
             String username = request.getSession().getAttribute("session_username").toString();
-            String officehourid = request.getParameter("slot");
-            String sql = "SELECT * FROM staffmembers.reservation s INNER JOIN staffmembers.officehours b ON s.officehoursID = b.officehoursID INNER JOIN staffmembers.user c ON s.tousername = c.username AND c.username='" + username + "'  INNER JOIN staffmembers.slot t ON b.slotid = t.slotid AND s.officehoursID ='" + officehourid + "';";
+            String slot = request.getParameter("slot");
+             String date = request.getParameter("date");
+              String dateValidation[] = date.split("/");
+            boolean check = false;
+        
+             if (Integer.parseInt(dateValidation[0]) <= 31 && Integer.parseInt(dateValidation[1]) <= 12
+                    && dateValidation[2].length() == 4) {
+                
+                check = true;
+                
+            } else {
+                out.println("<script type=\"text/javascript\">");
+                out.println("window.alert('Date entered is incorrect!! Please enter it in the following format (dd/mm/yyyy) ');");
+                out.println("window.location.href=\"staffMeetings.jsp\";");
+                out.println("</script>");
+            }
+            if(check){
+            String sql = "SELECT * FROM staffmembers.reservation s INNER JOIN staffmembers.officehours b ON s.officehoursID = b.officehoursID INNER JOIN staffmembers.user c ON s.tousername = c.username AND c.username='" + username + "'  INNER JOIN staffmembers.slot t ON b.slotid = t.slotid AND b.slotid ='" + slot + "'  AND b.date ='" + date + "';";
             ResultSet rs = statement.executeQuery(sql);
             if (rs.next()) {
                 String status = rs.getString("online");
@@ -58,6 +74,7 @@
                     out.println("window.alert('No reserved meetings to display');");
                     out.println("window.location.href=\"staffMeetings.jsp\";");
                     out.println("</script>");
-                }%>
+                }
+}%>
     </body>
 </html>
